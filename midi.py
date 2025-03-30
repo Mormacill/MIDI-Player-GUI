@@ -2,14 +2,26 @@ import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
 import mido
-import time
+import re
 
-port = mido.open_output('FLUID Synth (2):Synth input port (2:0) 128:0')
+#Qsynth
+port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
+
+#CH345 USB-Midi
+#port = mido.open_output('CH345:CH345 MIDI 1 28:0')
+
+#somehow port.panic() doesnt work on CH345
+def ownPanic():
+    for ch in range(15):
+      for noteNumber in range (127):
+        msg = mido.Message('note_off', channel=ch, note=noteNumber)
+        port.send(msg)
 
 def quit():
+    global running
+    running = False
+    ownPanic()
     root.destroy()
-    port.panic()
-
 
 def stopplayback():
     global running
@@ -27,17 +39,107 @@ def playmidi():
     tb.insert(tk.END, "Spieldauer: " + "%.2f" % estplaytime + " Minuten")
     tb.tag_add("center", "1.0", "end")
     tb.config(state='disabled')
+
     for msg2 in mid.play():
+        msg2_s = str(msg2)
+        msg2_re = re.sub("channel=0", "channel=1", msg2_s)
+        #mido.Message.from_str(msg2_re)
+        port.send(mido.Message.from_str(msg2_re))
         port.send(msg2)
+        print(msg2_re)
         root.update()
-        if running == False:
-            port.panic()
-            break
+        if running == False:            
+          ownPanic()
+          break
 
 def readRegister():
     print(hw_1.get(), hw_2.get(), hw_3.get(), hw_4.get())
     print(hiw_1.get(), hiw_2.get(), hiw_3.get(), hiw_4.get())
     print(ped_1.get(), ped_2.get())
+
+def noteON(chan, key):
+    msg = mido.Message('note_on', channel=chan, note=key)
+    port.send(msg)
+
+def noteOFF(chan, key):
+    msg = mido.Message('note_off', channel=chan, note=key)
+    port.send(msg)
+
+def writeHW1(chan, key):
+    if hw_1.get() == 1:
+      print(key)
+      noteON(chan, key)
+    elif hw_1.get() == 0:
+      noteOFF(chan, key)
+
+def writeHW2(chan, key):
+    if hw_2.get() == 1:
+      print(key)
+      noteON(chan, key)
+    elif hw_2.get() == 0:
+      noteOFF(chan, key)
+
+def writeHW3(chan, key):
+    if hw_3.get() == 1:
+      print(key)
+      noteON(chan, key)
+    elif hw_3.get() == 0:
+      noteOFF(chan, key)
+
+def writeHW4(chan, key):
+    if hw_4.get() == 1:
+      print(key)
+      noteON(chan, key)
+    if hw_4.get() == 0:
+      noteOFF(chan, key)
+
+##########################################################
+
+def writeHiW1(chan, key):
+    if hiw_1.get() == 1:
+      print(key)
+      noteON(chan, key)
+    elif hiw_1.get() == 0:
+      noteOFF(chan, key)
+
+def writeHiW2(chan, key):
+    if hiw_2.get() == 1:
+      print(key)
+      noteON(chan, key)
+    elif hiw_2.get() == 0:
+      noteOFF(chan, key)
+
+def writeHiW3(chan, key):
+    if hiw_3.get() == 1:
+      print(key)
+      noteON(chan, key)
+    elif hiw_3.get() == 0:
+      noteOFF(chan, key)
+
+def writeHiW4(chan, key):
+    if hiw_4.get() == 1:
+      print(key)
+      noteON(chan, key)
+    if hiw_4.get() == 0:
+      noteOFF(chan, key)
+
+##########################################################
+
+def writePed1(chan, key):
+    if ped_1.get() == 1:
+      print(key)
+      noteON(chan, key)
+    if ped_1.get() == 0:
+      noteOFF(chan, key)
+
+def writePed2(chan, key):
+    if ped_2.get() == 1:
+      print(key)
+      noteON(chan, key)
+    if ped_2.get() == 0:
+      noteOFF(chan, key)
+
+##########################################################
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -107,7 +209,7 @@ if __name__ == "__main__":
         root,
         text='Rohrflöte 8\'',
         variable=hw_1,
-        command=readRegister
+        command=lambda: writeHW1(0,60) #99
         )
 
     hw_prinz = tk.Checkbutton(
@@ -115,63 +217,63 @@ if __name__ == "__main__":
         text='Prinzipal 4\'',
         variable=hw_2,
         #font=("", 10),
-        command=readRegister
+        command=lambda: writeHW2(0,61) #98
         )
 
     hw_okt = tk.Checkbutton(
         root,
         text='Oktave 2\'',
         variable=hw_3,
-        command=readRegister
+        command=lambda: writeHW3(0,62) #97
         )
 
     hw_mix = tk.Checkbutton(
         root,
         text='Mixtur',
         variable=hw_4,
-        command=readRegister
+        command=lambda: writeHW4(0,63) #96
         )
 
     hiw_ged = tk.Checkbutton(
         root,
         text='Gedackt 8\'',
         variable=hiw_1,
-        command=readRegister
+        command=lambda: writeHiW1(1,60) #99
         )
 
     hiw_gedfl = tk.Checkbutton(
         root,
         text='Ged. Flöte 4\'',
         variable=hiw_2,
-        command=readRegister
+        command=lambda: writeHiW2(1,61) #98
         )
 
     hiw_wald = tk.Checkbutton(
         root,
         text='Waldflöte 2\'',
         variable=hiw_3,
-        command=readRegister
+        command=lambda: writeHiW3(1,62) #97
         )
 
     hiw_siff = tk.Checkbutton(
         root,
         text='Sifflöte',
         variable=hiw_4,
-        command=readRegister
+        command=lambda: writeHiW4(1,63) #96
         )
 
     ped_sub = tk.Checkbutton(
         root,
         text='Subbaß 16\'',
         variable=ped_1,
-        command=readRegister
+        command=lambda: writePed1(1,60)
         )
 
     ped_nacht = tk.Checkbutton(
         root,
         text='Nachhorn 4\'',
         variable=ped_2,
-        command=readRegister
+        command=lambda: writePed2(1,61)
         )
 
     HW_Label.place(x=350, y=10)
@@ -190,7 +292,7 @@ if __name__ == "__main__":
     ped_sub.place(x=350, y=280)
     ped_nacht.place(x=350, y=300)
 
-    msg = mido.Message('note_on', channel=0, note=60)
-    msg3 = mido.Message('note_off', channel=0, note=60)
+    #msg = mido.Message('note_on', channel=0, note=60)
+    #msg3 = mido.Message('note_off', channel=0, note=60)
 
 root.mainloop()
