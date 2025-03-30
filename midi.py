@@ -44,9 +44,11 @@ def playmidi():
         msg2_s = str(msg2)
         msg2_re = re.sub("channel=0", "channel=1", msg2_s)
         #mido.Message.from_str(msg2_re)
-        port.send(mido.Message.from_str(msg2_re))
+        #port.send(mido.Message.from_str(msg2_re))
+        msg2_reSearch = re.findall("time=", msg2_s)
+        #print(msg2_reSearch.group())
         port.send(msg2)
-        print(msg2_re)
+        #print(msg2_re)
         root.update()
         if running == False:            
           ownPanic()
