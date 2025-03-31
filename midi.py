@@ -44,11 +44,12 @@ def refreshPlaytime(estplaytime_):
 
 def playmidi():
     global running
-    global speed_multiplier_ref
+    speed_multiplier_ref = speed_multiplier.get()
     running = False
     filename = askopenfilename(filetypes = [('Midi Files', '*.mid')])
     mid = mido.MidiFile(filename)
     estplaytime = mid.length / 60
+    refreshPlaytime(estplaytime)
     running = True
 
     for msg in mid:
@@ -210,8 +211,6 @@ if __name__ == "__main__":
 
     speed_multiplier = tk.IntVar()
     speed_multiplier.set(100)
-    global speed_multiplier_ref
-    speed_multiplier_ref = speed_multiplier.get()
 
     start = tk.Button(
         root,
