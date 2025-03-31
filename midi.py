@@ -34,18 +34,23 @@ def stopplayback():
     global running
     running = False
 
+def setSpeed_multiplier_ref:
+    speed_multiplier_ref = speed_multiplier.get()
+
+def refreshPlaytime(estplaytime_):
+    tb.config(state='normal')
+    tb.delete("1.0", "end")
+    tb.tag_configure("center", justify='center')
+    tb.insert(tk.END, "Spieldauer: " + "%.2f" % (estplaytime_/(speed_multiplier.get()/100)) + " Minuten")
+    tb.tag_add("center", "1.0", "end")
+    tb.config(state='disabled')
+
 def playmidi():
     global running
     running = False
     filename = askopenfilename(filetypes = [('Midi Files', '*.mid')])
     mid = mido.MidiFile(filename)
     estplaytime = mid.length / 60
-    tb.config(state='normal')
-    tb.delete("1.0", "end")
-    tb.tag_configure("center", justify='center')
-    tb.insert(tk.END, "Spieldauer: " + "%.2f" % (estplaytime/(speed_multiplier.get()/100)) + " Minuten")
-    tb.tag_add("center", "1.0", "end")
-    tb.config(state='disabled')
     running = True
 
     for msg in mid:
@@ -61,6 +66,8 @@ def playmidi():
           msg3_re = re.sub("channel=2", "channel=1", str(msg))
           port.send(mido.Message.from_str(msg3_re))
         port.send(msg)
+        if speed_multiplier.get() != speed_multiplier_ref:
+          refreshPlaytime(estplaytime)
 
     #for msg2 in mid.play():
         #msg2_string = str(msg2)
@@ -224,7 +231,8 @@ if __name__ == "__main__":
         relief=tk.FLAT,
         length=200,
         tickinterval=30,
-        variable=speed_multiplier
+        variable=speed_multiplier,
+        command=setSpeed_multiplier_ref
         )
 
     speedReset = tk.Button(
