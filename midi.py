@@ -34,9 +34,6 @@ def stopplayback():
     global running
     running = False
 
-def setSpeed_multiplier_ref():
-    speed_multiplier_ref = speed_multiplier.get()
-
 def refreshPlaytime(estplaytime_):
     tb.config(state='normal')
     tb.delete("1.0", "end")
@@ -56,6 +53,10 @@ def playmidi():
     for msg in mid:
       time.sleep(msg.time * 1/((speed_multiplier.get())/100))
       if not msg.is_meta:
+
+        if speed_multiplier.get() != speed_multiplier_ref:
+          refreshPlaytime(estplaytime)
+
         if kop_1.get(): #II/I
           msg_re = re.sub("channel=0", "channel=1", str(msg))
           port.send(mido.Message.from_str(msg_re))
@@ -66,8 +67,7 @@ def playmidi():
           msg3_re = re.sub("channel=2", "channel=1", str(msg))
           port.send(mido.Message.from_str(msg3_re))
         port.send(msg)
-        if speed_multiplier.get() != speed_multiplier_ref:
-          refreshPlaytime(estplaytime)
+        speed_multiplier_ref = speed_multiplier.get()
 
     #for msg2 in mid.play():
         #msg2_string = str(msg2)
@@ -232,8 +232,7 @@ if __name__ == "__main__":
         relief=tk.FLAT,
         length=200,
         tickinterval=30,
-        variable=speed_multiplier,
-        command=setSpeed_multiplier_ref
+        variable=speed_multiplier
         )
 
     speedReset = tk.Button(
