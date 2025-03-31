@@ -209,6 +209,7 @@ if __name__ == "__main__":
 
     speed_multiplier = tk.IntVar()
     speed_multiplier.set(100)
+    speed_multiplier_ref = speed_multiplier.get()
 
     start = tk.Button(
         root,
