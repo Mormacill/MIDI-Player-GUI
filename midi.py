@@ -34,7 +34,7 @@ def stopplayback():
     global running
     running = False
 
-def setSpeed_multiplier_ref:
+def setSpeed_multiplier_ref():
     speed_multiplier_ref = speed_multiplier.get()
 
 def refreshPlaytime(estplaytime_):
