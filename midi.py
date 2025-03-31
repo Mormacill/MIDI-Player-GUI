@@ -164,15 +164,15 @@ def writePed2(chan, key):
 
 def kop1_switchOff():
     if not kop_1.get():
-      ownPanic_spec(1) #Channel 1
+      ownPanic_spec(1) #Channel 1 Mido, Channel 2 Mdidi
 
 def kop2_switchOff():
     if not kop_2.get():
-      ownPanic_spec(0) #Channel 1
+      ownPanic_spec(0) #Channel 0 Mido, Channel 1 Mdidi
 
 def kop3_switchOff():
     if not kop_3.get():
-      ownPanic_spec(1) #Channel 1
+      ownPanic_spec(1) #Channel 1 Mido, Channel 2 Mdidi
 
 ##########################################################
 
@@ -333,14 +333,14 @@ if __name__ == "__main__":
         root,
         text='Subbaß 16\'',
         variable=ped_1,
-        command=lambda: writePed1(1,60)
+        command=lambda: writePed1(2,60)
         )
 
     ped_nacht = tk.Checkbutton(
         root,
         text='Nachthorn 4\'',
         variable=ped_2,
-        command=lambda: writePed2(1,61)
+        command=lambda: writePed2(2,61)
         )
 
     kop_man = tk.Checkbutton(
