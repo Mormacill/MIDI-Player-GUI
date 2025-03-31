@@ -189,8 +189,11 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("MIDI-Player")
     root.geometry("600x330")
-    root.tk.call('tk', 'scaling',1.25)
+    root.tk.call('tk', 'scaling', 3) #default 1.25
+    #maximized
     #root.attributes('-zoomed', True)
+    #fullscreen
+    root.attributes('-fullscreen', True)
 
     hw_1 = tk.IntVar()
     hw_2 = tk.IntVar()
