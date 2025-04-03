@@ -34,6 +34,25 @@ def stopplayback():
     global running
     running = False
 
+def regres(v):
+    hw_1.set(v)
+    hw_2.set(v)
+    hw_3.set(v)
+    hw_4.set(v)
+
+    hiw_1.set(v)
+    hiw_2.set(v)
+    hiw_3.set(v)
+    hiw_4.set(v)
+
+    ped_1.set(v)
+    ped_2.set(v)
+
+    kop_1.set(v)
+    kop_2.set(v)
+    kop_3.set(v)
+
+
 def refreshPlaytime(estplaytime_):
     tb.config(state='normal')
     tb.delete("1.0", "end")
@@ -247,6 +266,20 @@ if __name__ == "__main__":
         command=lambda: speed_multiplier.set(100)
         )
 
+    registerReset = tk.Button(
+        root,
+        text='0',
+        font=("", 7),
+        command=lambda: regres(0)
+        )
+
+    registerTutti = tk.Button(
+        root,
+        text='T',
+        font=("", 7),
+        command=lambda: regres(1)
+        )
+
     stop = tk.Button(
         root,
         text='stop',
@@ -263,6 +296,8 @@ if __name__ == "__main__":
     tb.place(x=280, y=120, anchor=tk.CENTER)
     speedSlider.place(x=280, y=280, anchor=tk.CENTER)
     speedReset.place(x=280, y=380, anchor=tk.CENTER)
+    registerReset.place(x=750, y=400, anchor=tk.CENTER)
+    registerTutti.place(x=660, y=400, anchor=tk.CENTER)
     stop.place(x=280, y=185, anchor=tk.CENTER)
     quit.place(x=80, y=440, anchor=tk.CENTER)
 
