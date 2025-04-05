@@ -8,10 +8,10 @@ import re
 import time
 
 #Qsynth
-port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
+#port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
 #CH345 USB-Midi
-#port = mido.open_output('CH345:CH345 MIDI 1 28:0')
+port = mido.open_output('CH345:CH345 MIDI 1 28:0')
 
 #somehow port.panic() doesnt work on CH345
 def ownPanic():
@@ -330,7 +330,7 @@ if __name__ == "__main__":
         text='Rohrflöte 8\'',
 	font=("", 7),
         variable=hw_1,
-        command=lambda: writeHW1(0,60) #99
+        command=lambda: writeHW1(0,99) #99
         )
 
     hw_prinz = tk.Checkbutton(
@@ -339,7 +339,7 @@ if __name__ == "__main__":
 	font=("", 7),
         variable=hw_2,
         #font=("", 10),
-        command=lambda: writeHW2(0,61) #98
+        command=lambda: writeHW2(0,98) #98
         )
 
     hw_okt = tk.Checkbutton(
@@ -347,7 +347,7 @@ if __name__ == "__main__":
         text='Oktave 2\'',
 	font=("", 7),
         variable=hw_3,
-        command=lambda: writeHW3(0,62) #97
+        command=lambda: writeHW3(0,97) #97
         )
 
     hw_mix = tk.Checkbutton(
@@ -355,7 +355,7 @@ if __name__ == "__main__":
         text='Mixtur',
 	font=("", 7),
         variable=hw_4,
-        command=lambda: writeHW4(0,63) #96
+        command=lambda: writeHW4(0,96) #96
         )
 
     hiw_ged = tk.Checkbutton(
