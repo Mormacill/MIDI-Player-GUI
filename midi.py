@@ -7,11 +7,33 @@ import mido
 import re
 import time
 
+#todo
+#if ownPanic() is called (e.g. stop pressed), leave register untouched
+
 #Qsynth
 #port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
 #CH345 USB-Midi
 port = mido.open_output('CH345:CH345 MIDI 1 20:0')
+
+###
+hwRegChan = 0
+hiwRegChan = 1
+pedRegChan = 2
+
+hw_1RegKey = 99
+hw_2RegKey = 98
+hw_3RegKey = 97
+hw_4RegKey = 96
+
+hiw_1RegKey = 99
+hiw_2RegKey = 98
+hiw_3RegKey = 97
+hiw_4RegKey = 96
+
+ped_1RegKey = 99
+ped_2RegKey = 98
+###
 
 #somehow port.panic() doesnt work on CH345
 def ownPanic():
@@ -36,21 +58,34 @@ def stopplayback():
 
 def regres(v):
     hw_1.set(v)
+    writeHW1(hwRegChan, hw_1RegKey)
     hw_2.set(v)
+    writeHW2(hwRegChan, hw_2RegKey)
     hw_3.set(v)
+    writeHW3(hwRegChan, hw_3RegKey)
     hw_4.set(v)
+    writeHW4(hwRegChan, hw_4RegKey)
 
     hiw_1.set(v)
+    writeHiW1(hiwRegChan, hiw_1RegKey)
     hiw_2.set(v)
+    writeHiW2(hiwRegChan, hiw_2RegKey)
     hiw_3.set(v)
+    writeHiW3(hiwRegChan, hiw_3RegKey)
     hiw_4.set(v)
+    writeHiW4(hiwRegChan, hiw_4RegKey)
 
     ped_1.set(v)
+    writePed1(pedRegChan, ped_1RegKey)
     ped_2.set(v)
+    writePed2(pedRegChan, ped_2RegKey)
 
     kop_1.set(v)
+    kop1_switchOff()
     kop_2.set(v)
+    kop2_switchOff()
     kop_3.set(v)
+    kop3_switchOff()
 
 
 def refreshPlaytime(estplaytime_):
@@ -330,7 +365,7 @@ if __name__ == "__main__":
         text='Rohrflöte 8\'',
 	font=("", 7),
         variable=hw_1,
-        command=lambda: writeHW1(0,99) #99
+        command=lambda: writeHW1(hwRegChan,hw_1RegKey)
         )
 
     hw_prinz = tk.Checkbutton(
@@ -339,7 +374,7 @@ if __name__ == "__main__":
 	font=("", 7),
         variable=hw_2,
         #font=("", 10),
-        command=lambda: writeHW2(0,98) #98
+        command=lambda: writeHW2(hwRegChan,hw_2RegKey)
         )
 
     hw_okt = tk.Checkbutton(
@@ -347,7 +382,7 @@ if __name__ == "__main__":
         text='Oktave 2\'',
 	font=("", 7),
         variable=hw_3,
-        command=lambda: writeHW3(0,97) #97
+        command=lambda: writeHW3(hwRegChan,hw_3RegKey)
         )
 
     hw_mix = tk.Checkbutton(
@@ -355,7 +390,7 @@ if __name__ == "__main__":
         text='Mixtur',
 	font=("", 7),
         variable=hw_4,
-        command=lambda: writeHW4(0,96) #96
+        command=lambda: writeHW4(hwRegChan,hw_4RegKey)
         )
 
     hiw_ged = tk.Checkbutton(
@@ -363,7 +398,7 @@ if __name__ == "__main__":
         text='Gedackt 8\'',
 	font=("", 7),
         variable=hiw_1,
-        command=lambda: writeHiW1(1,60) #99
+        command=lambda: writeHiW1(hiwRegChan,hiw_1RegKey)
         )
 
     hiw_gedfl = tk.Checkbutton(
@@ -371,7 +406,7 @@ if __name__ == "__main__":
         text='Ged. Flöte 4\'',
 	font=("", 7),
         variable=hiw_2,
-        command=lambda: writeHiW2(1,61) #98
+        command=lambda: writeHiW2(hiwRegChan,hiw_2RegKey)
         )
 
     hiw_wald = tk.Checkbutton(
@@ -379,7 +414,7 @@ if __name__ == "__main__":
         text='Waldflöte 2\'',
 	font=("", 7),
         variable=hiw_3,
-        command=lambda: writeHiW3(1,62) #97
+        command=lambda: writeHiW3(hiwRegChan,hiw_3RegKey)
         )
 
     hiw_siff = tk.Checkbutton(
@@ -387,7 +422,7 @@ if __name__ == "__main__":
         text='Sifflöte',
 	font=("", 7),
         variable=hiw_4,
-        command=lambda: writeHiW4(1,63) #96
+        command=lambda: writeHiW4(hiwRegChan,hiw_4RegKey)
         )
 
     ped_sub = tk.Checkbutton(
@@ -395,7 +430,7 @@ if __name__ == "__main__":
         text='Subbaß 16\'',
 	font=("", 7),
         variable=ped_1,
-        command=lambda: writePed1(2,60)
+        command=lambda: writePed1(pedRegChan,ped_1RegKey)
         )
 
     ped_nacht = tk.Checkbutton(
@@ -403,7 +438,7 @@ if __name__ == "__main__":
         text='Nachthorn 4\'',
 	font=("", 7),
         variable=ped_2,
-        command=lambda: writePed2(2,61)
+        command=lambda: writePed2(pedRegChan,ped_2RegKey)
         )
 
     kop_man = tk.Checkbutton(
