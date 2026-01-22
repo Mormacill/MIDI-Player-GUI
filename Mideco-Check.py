@@ -39,5 +39,9 @@ def midTestAutomatic():
         port.send(msg)
         time.sleep(1)
 
-#midTestManual()
-midTestAutomatic()
+z = input("auto or manual mode?\nenter a or m\n")
+if z == "a":
+    midTestAutomatic()
+elif z == "m":
+    midTestManual()
+
