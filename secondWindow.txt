@@ -1,0 +1,25 @@
+def create_window():
+    window = tk.Toplevel(root)
+    window.title("New Window!")
+    window.configure(bg='light goldenrod yellow')
+
+    wartung2 = tk.Button(
+      window,
+      text="close",
+      command=window.destroy
+      )
+    window.attributes('-fullscreen', True)
+    #window.attributes('-zoomed', True)
+
+    wartung2.pack()
+
+    ...
+
+
+    wartung = tk.Button(
+      root,
+      text="Wartung",
+      command=create_window
+      )
+
+    wartung.place(x=280, y=440, anchor=tk.CENTER)
