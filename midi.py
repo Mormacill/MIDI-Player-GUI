@@ -13,10 +13,10 @@ import time
 #if ownPanic() is called (e.g. stop pressed), leave register untouched
 
 #Qsynth
-port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
+#port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
 #CH345 USB-Midi
-#port = mido.open_output('CH345:CH345 MIDI 1 20:0')
+port = mido.open_output('CH345:CH345 MIDI 1 28:0')
 
 ###
 hwRegChan = 0
@@ -39,7 +39,7 @@ ped_2RegKey = 98
 
 #somehow port.panic() doesnt work on CH345
 def ownPanic():
-    for ch in range(15):
+    for ch in range(2):
       for noteNumber in range(127):
         msg = mido.Message('note_off', channel=ch, note=noteNumber)
         port.send(msg)
@@ -373,12 +373,16 @@ if __name__ == "__main__":
         command=lambda: Thread(target = playmidi).start()
         )
 
+    start.place(x=280, y=50, anchor=tk.CENTER)
+
     tb = tk.Text(
         root,
         height = 1,
         width = 30,
         state='disabled'
         )
+
+    tb.place(x=280, y=120, anchor=tk.CENTER)
 
     speedSlider = tk.Scale(
         root,
@@ -393,11 +397,15 @@ if __name__ == "__main__":
         font=("", 7)
         )
 
+    speedSlider.place(x=280, y=280, anchor=tk.CENTER)
+
     speedReset = tk.Button(
         root,
         text='reset',
         command=lambda: speed_multiplier.set(100)
         )
+
+    speedReset.place(x=280, y=380, anchor=tk.CENTER)
 
     registerReset = tk.Button(
         root,
@@ -406,6 +414,8 @@ if __name__ == "__main__":
         command=lambda: regres(0)
         )
 
+    registerReset.place(x=750, y=400, anchor=tk.CENTER)
+
     registerTutti = tk.Button(
         root,
         text='T',
@@ -413,11 +423,15 @@ if __name__ == "__main__":
         command=lambda: regres(1)
         )
 
+    registerTutti.place(x=660, y=400, anchor=tk.CENTER)
+
     stop = tk.Button(
         root,
         text='stop',
         command=stopplayback
         )
+
+    stop.place(x=280, y=185, anchor=tk.CENTER)
 
     quit = tk.Button(
         root,
@@ -425,13 +439,6 @@ if __name__ == "__main__":
         command=quit
         )
 
-    start.place(x=280, y=50, anchor=tk.CENTER)
-    tb.place(x=280, y=120, anchor=tk.CENTER)
-    speedSlider.place(x=280, y=280, anchor=tk.CENTER)
-    speedReset.place(x=280, y=380, anchor=tk.CENTER)
-    registerReset.place(x=750, y=400, anchor=tk.CENTER)
-    registerTutti.place(x=660, y=400, anchor=tk.CENTER)
-    stop.place(x=280, y=185, anchor=tk.CENTER)
     quit.place(x=80, y=440, anchor=tk.CENTER)
 
     HW_Label = tk.Label(
@@ -440,11 +447,15 @@ if __name__ == "__main__":
         font=("", 7),
         )
 
+    HW_Label.place(x=486, y=190, anchor=tk.NW)
+
     HIW_Label = tk.Label(
         root,
         text='Hinterwerk',
         font=("", 7)
         )
+
+    HIW_Label.place(x=650, y=190, anchor=tk.NW)
 
     PED_Label = tk.Label(
         root,
@@ -452,11 +463,15 @@ if __name__ == "__main__":
         font=("", 7)
         )
 
+    PED_Label.place(x=486, y=370, anchor=tk.NW)
+
     KOP_Label = tk.Label(
         root,
         text='Koppeln',
         font=("", 7)
         )
+
+    KOP_Label.place(x=650, y=40, anchor=tk.NW)
 
     hw_rohr = tk.Checkbutton(
         root,
@@ -465,6 +480,8 @@ if __name__ == "__main__":
         variable=hw_1,
         command=lambda: writeHW1(hwRegChan,hw_1RegKey)
         )
+
+    hw_rohr.place(x=450, y=230, anchor=tk.NW)
 
     hw_prinz = tk.Checkbutton(
         root,
@@ -475,6 +492,8 @@ if __name__ == "__main__":
         command=lambda: writeHW2(hwRegChan,hw_2RegKey)
         )
 
+    hw_prinz.place(x=450, y=260, anchor=tk.NW)
+
     hw_okt = tk.Checkbutton(
         root,
         text='Oktave 2\'',
@@ -482,6 +501,8 @@ if __name__ == "__main__":
         variable=hw_3,
         command=lambda: writeHW3(hwRegChan,hw_3RegKey)
         )
+
+    hw_okt.place(x=450, y=290, anchor=tk.NW)
 
     hw_mix = tk.Checkbutton(
         root,
@@ -491,6 +512,8 @@ if __name__ == "__main__":
         command=lambda: writeHW4(hwRegChan,hw_4RegKey)
         )
 
+    hw_mix.place(x=450, y=320, anchor=tk.NW)
+
     hiw_ged = tk.Checkbutton(
         root,
         text='Gedackt 8\'',
@@ -498,6 +521,8 @@ if __name__ == "__main__":
         variable=hiw_1,
         command=lambda: writeHiW1(hiwRegChan,hiw_1RegKey)
         )
+
+    hiw_ged.place(x=614, y=230, anchor=tk.NW)
 
     hiw_gedfl = tk.Checkbutton(
         root,
@@ -507,6 +532,8 @@ if __name__ == "__main__":
         command=lambda: writeHiW2(hiwRegChan,hiw_2RegKey)
         )
 
+    hiw_gedfl.place(x=614, y=260, anchor=tk.NW)
+
     hiw_wald = tk.Checkbutton(
         root,
         text='Waldflöte 2\'',
@@ -514,6 +541,8 @@ if __name__ == "__main__":
         variable=hiw_3,
         command=lambda: writeHiW3(hiwRegChan,hiw_3RegKey)
         )
+
+    hiw_wald.place(x=614, y=290, anchor=tk.NW)
 
     hiw_siff = tk.Checkbutton(
         root,
@@ -523,6 +552,8 @@ if __name__ == "__main__":
         command=lambda: writeHiW4(hiwRegChan,hiw_4RegKey)
         )
 
+    hiw_siff.place(x=614, y=320, anchor=tk.NW)
+
     ped_sub = tk.Checkbutton(
         root,
         text='Subbaß 16\'',
@@ -530,6 +561,8 @@ if __name__ == "__main__":
         variable=ped_1,
         command=lambda: writePed1(pedRegChan,ped_1RegKey)
         )
+
+    ped_sub.place(x=450, y=410, anchor=tk.NW)
 
     ped_nacht = tk.Checkbutton(
         root,
@@ -539,6 +572,8 @@ if __name__ == "__main__":
         command=lambda: writePed2(pedRegChan,ped_2RegKey)
         )
 
+    ped_nacht.place(x=450, y=440, anchor=tk.NW)
+
     kop_man = tk.Checkbutton(
         root,
         text='II/I',
@@ -546,6 +581,8 @@ if __name__ == "__main__":
         variable=kop_1,
         command=kop1_switchOff
         )
+
+    kop_man.place(x=614, y=80, anchor=tk.NW)
 
     kop_pedI = tk.Checkbutton(
         root,
@@ -555,6 +592,8 @@ if __name__ == "__main__":
         command=kop2_switchOff
         )
 
+    kop_pedI.place(x=614, y=110, anchor=tk.NW)
+
     kop_pedII = tk.Checkbutton(
         root,
         text='II/Ped',
@@ -563,29 +602,7 @@ if __name__ == "__main__":
         command=kop3_switchOff
         )
 
-    HW_Label.place(x=486, y=190, anchor=tk.NW)
-    hw_rohr.place(x=450, y=230, anchor=tk.NW)
-    hw_prinz.place(x=450, y=260, anchor=tk.NW)
-    hw_okt.place(x=450, y=290, anchor=tk.NW)
-    hw_mix.place(x=450, y=320, anchor=tk.NW)
-
-    HIW_Label.place(x=650, y=190, anchor=tk.NW)
-    hiw_ged.place(x=614, y=230, anchor=tk.NW)
-    hiw_gedfl.place(x=614, y=260, anchor=tk.NW)
-    hiw_wald.place(x=614, y=290, anchor=tk.NW)
-    hiw_siff.place(x=614, y=320, anchor=tk.NW)
-
-    PED_Label.place(x=486, y=370, anchor=tk.NW)
-    ped_sub.place(x=450, y=410, anchor=tk.NW)
-    ped_nacht.place(x=450, y=440, anchor=tk.NW)
-
-    KOP_Label.place(x=650, y=40, anchor=tk.NW)
-    kop_man.place(x=614, y=80, anchor=tk.NW)
-    kop_pedI.place(x=614, y=110, anchor=tk.NW)
     kop_pedII.place(x=614, y=140, anchor=tk.NW)
-
-    #msg = mido.Message('note_on', channel=0, note=60)
-    #msg3 = mido.Message('note_off', channel=0, note=60)
 
     maintenance = tk.Button(
       root,
