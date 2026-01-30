@@ -19,22 +19,22 @@ import time
 port = mido.open_output('CH345:CH345 MIDI 1 28:0')
 
 ###
-hwRegChan = 0
-hiwRegChan = 1
+hwRegChan = 2   #Stops all run via the pedal-interface since there are unused ports
+hiwRegChan = 2
 pedRegChan = 2
 
-hw_1RegKey = 99
-hw_2RegKey = 98
-hw_3RegKey = 97
-hw_4RegKey = 96
+hw_1RegKey = 68 #Counting upwards from the third bus of the interface since the pedal-interface only uses two buses. 68 corresponds to contact 33
+hw_2RegKey = 69
+hw_3RegKey = 70
+hw_4RegKey = 71
 
-hiw_1RegKey = 99
-hiw_2RegKey = 98
-hiw_3RegKey = 97
-hiw_4RegKey = 96
+hiw_1RegKey = 72
+hiw_2RegKey = 73
+hiw_3RegKey = 74
+hiw_4RegKey = 75
 
-ped_1RegKey = 99
-ped_2RegKey = 98
+ped_1RegKey = 76
+ped_2RegKey = 77
 ###
 
 #somehow port.panic() doesnt work on CH345
