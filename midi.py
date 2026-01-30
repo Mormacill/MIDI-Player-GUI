@@ -345,7 +345,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.title("MIDI-Player")
     root.geometry("600x330")
-    root.tk.call('tk', 'scaling', 3) #default 1.25
+    root.tk.call('tk', 'scaling', 2) #default 1.25; 3 too large
     #maximized
     #root.attributes('-zoomed', True)
     #fullscreen
