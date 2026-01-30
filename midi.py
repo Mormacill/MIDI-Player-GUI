@@ -10,7 +10,7 @@ import re
 import time
 
 #todo
-#if ownPanic() is called (e.g. stop pressed), leave register untouched
+#DONE -> if ownPanic() is called (e.g. stop pressed), leave register untouched
 
 #Qsynth
 #port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
@@ -19,11 +19,11 @@ import time
 port = mido.open_output('CH345:CH345 MIDI 1 28:0')
 
 ###
-hwRegChan = 2   #Stops all run via the pedal-interface since there are unused ports
+hwRegChan = 2     #Stops all run via the pedal-interface since there are unused ports
 hiwRegChan = 2
 pedRegChan = 2
 
-hw_1RegKey = 68 #Counting upwards from the third bus of the interface since the pedal-interface only uses two buses. 68 corresponds to contact 33
+hw_1RegKey = 68   #Counting upwards from the third bus of the interface since the pedal-interface only uses two buses. 68 corresponds to contact 33
 hw_2RegKey = 69
 hw_3RegKey = 70
 hw_4RegKey = 71
@@ -39,13 +39,17 @@ ped_2RegKey = 77
 
 #somehow port.panic() doesnt work on CH345
 def ownPanic():
-    for ch in range(2): #This organ only has 3 divisions, so cleaning the first 3 channel is enough
-      for noteNumber in range(127):
+    for ch in range(1):                   #This organ only has 3 divisions, so cleaning the first 3 channel is enough; Here only clearing Manuals since Pedal has Stops included which shall not be cleared
+      for noteNumber in range(36, 97):    #36 to 96 is enough since 0 to 35 and 97 to 127 are not used
         msg = mido.Message('note_off', channel=ch, note=noteNumber)
         port.send(msg)
 
+    for noteNumber in range(36, 63):      #Clearing for Pedal Keys (36 to 63), only channel 2; 68 to 77 are all stops located
+      msg = mido.Message('note_off', channel=2, note=noteNumber)
+      port.send(msg)
+
 def ownPanic_spec(ch):
-    for noteNumber in range(127):
+    for noteNumber in range(36, 97):      #36 to 96 is enough since 0 to 35 and 97 to 127 are not used
         msg = mido.Message('note_off', channel=ch, note=noteNumber)
         port.send(msg)
 
