@@ -13,10 +13,10 @@ import time
 #if ownPanic() is called (e.g. stop pressed), leave register untouched
 
 #Qsynth
-#port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
+port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
 #CH345 USB-Midi
-port = mido.open_output('CH345:CH345 MIDI 1 20:0')
+#port = mido.open_output('CH345:CH345 MIDI 1 20:0')
 
 ###
 hwRegChan = 0
@@ -241,6 +241,102 @@ def kop3_switchOff():
 
 ##########################################################
 
+#Wartungsfenster
+def maintenance_window():
+    mwindow = tk.Toplevel(root)
+    mwindow.configure(bg='light goldenrod yellow')
+    mwindow.attributes('-fullscreen', True)
+
+    tune_werk = tk.IntVar(mwindow, value=0)
+
+    array_notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "H", "c", "c#", "d", "d#", "e", "f", "f#", "g", "g#", "a", "a#", "h", "c'", "c#'", "d'", "d#'", "e'", "f'", "f#'", "g'", "g#'", "a'", "a#'", "h'", "c''", "c#''", "d''", "d#''", "e''", "f''", "f#''", "g''", "g#''", "a''", "a#''", "h''", "c'''", "c#'''", "d'''", "d#'''", "e'''", "f'''", "f#'''", "g'''", "g#'''", "a'''", "a#'''", "h'''", "c''''"]
+
+    key = tk.IntVar(mwindow, value=36)
+
+    mwindow_close = tk.Button(
+      mwindow,
+      text="Schließen",
+      command=lambda: [mwindow.destroy(), ownPanic()]
+      )
+    mwindow_close.place(x=280, y=440, anchor=tk.CENTER)
+
+    mwindow_tune_hw = tk.Button(
+      mwindow,
+      text="Hauptwerk",
+      bg='red',
+      command=lambda: [ownPanic(), tune_werk.set(0), mwindow_tune_hw.config(bg='red'), mwindow_tune_hiw.config(bg='light gray'), mwindow_tune_ped.config(bg='light gray')]
+      )
+
+    mwindow_tune_hw.place(x=100, y=50, anchor=tk.CENTER)
+
+    mwindow_tune_hiw = tk.Button(
+      mwindow,
+      text="Hinterwerk",
+      command=lambda: [ownPanic(), tune_werk.set(1), mwindow_tune_hw.config(bg='light gray'), mwindow_tune_hiw.config(bg='red'), mwindow_tune_ped.config(bg='light gray')]
+      )
+
+    mwindow_tune_hiw.place(x=280, y=50, anchor=tk.CENTER)
+
+    mwindow_tune_ped = tk.Button(
+      mwindow,
+      text="Pedal",
+      command=lambda: [ownPanic(), tune_werk.set(2), mwindow_tune_hw.config(bg='light gray'), mwindow_tune_hiw.config(bg='light gray'), mwindow_tune_ped.config(bg='red')]
+      )
+
+    mwindow_tune_ped.place(x=460, y=50, anchor=tk.CENTER)
+
+    mwindow_tune_START = tk.Button(
+      mwindow,
+      text="Start",
+      command=lambda: [key.set(36), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled')]
+      )
+
+    mwindow_tune_START.place(x=280, y=120, anchor=tk.CENTER)
+
+    mwindow_next_tone = tk.Button(
+      mwindow,
+      text=">",
+      command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()+1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled')]
+      )
+
+    mwindow_next_tone.place(x=460, y=220, anchor=tk.CENTER)
+
+    mwindow_previous_tone = tk.Button(
+      mwindow,
+      text="<",
+      command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()-1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled')]
+      )
+
+    mwindow_previous_tone.place(x=100, y=220, anchor=tk.CENTER)
+
+    current_tone_Label = tk.Label(
+        mwindow,
+        text='Aktueller Ton',
+        bg='light goldenrod yellow'
+        )
+
+    current_tone_Label.place(x=280, y=190, anchor=tk.CENTER)
+
+    current_tone_box = tk.Text(
+        mwindow,
+        height = 1,
+        width = 10,
+        state='disabled',
+        font=("", 14)
+        )
+
+    current_tone_box.place(x=280, y=220, anchor=tk.CENTER)
+
+    mwindow_tune_STOP = tk.Button(
+      mwindow,
+      text="Stop",
+      command=ownPanic
+      )
+
+    mwindow_tune_STOP.place(x=280, y=300, anchor=tk.CENTER)
+
+##########################################################
+
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("MIDI-Player")
@@ -291,10 +387,10 @@ if __name__ == "__main__":
         orient=tk.HORIZONTAL,
         relief=tk.FLAT,
         length=300,
-	width=40,
+        width=40,
         tickinterval=30,
         variable=speed_multiplier,
-	font=("", 7)
+        font=("", 7)
         )
 
     speedReset = tk.Button(
@@ -341,7 +437,7 @@ if __name__ == "__main__":
     HW_Label = tk.Label(
         root,
         text='Hauptwerk',
-	font=("", 7),
+        font=("", 7),
         )
 
     HIW_Label = tk.Label(
@@ -353,19 +449,19 @@ if __name__ == "__main__":
     PED_Label = tk.Label(
         root,
         text='Pedal',
-	font=("", 7)
+        font=("", 7)
         )
 
     KOP_Label = tk.Label(
         root,
         text='Koppeln',
-	font=("", 7)
+        font=("", 7)
         )
 
     hw_rohr = tk.Checkbutton(
         root,
         text='Rohrflöte 8\'',
-	font=("", 7),
+        font=("", 7),
         variable=hw_1,
         command=lambda: writeHW1(hwRegChan,hw_1RegKey)
         )
@@ -373,7 +469,7 @@ if __name__ == "__main__":
     hw_prinz = tk.Checkbutton(
         root,
         text='Prinzipal 4\'',
-	font=("", 7),
+        font=("", 7),
         variable=hw_2,
         #font=("", 10),
         command=lambda: writeHW2(hwRegChan,hw_2RegKey)
@@ -382,7 +478,7 @@ if __name__ == "__main__":
     hw_okt = tk.Checkbutton(
         root,
         text='Oktave 2\'',
-	font=("", 7),
+        font=("", 7),
         variable=hw_3,
         command=lambda: writeHW3(hwRegChan,hw_3RegKey)
         )
@@ -390,7 +486,7 @@ if __name__ == "__main__":
     hw_mix = tk.Checkbutton(
         root,
         text='Mixtur',
-	font=("", 7),
+        font=("", 7),
         variable=hw_4,
         command=lambda: writeHW4(hwRegChan,hw_4RegKey)
         )
@@ -398,7 +494,7 @@ if __name__ == "__main__":
     hiw_ged = tk.Checkbutton(
         root,
         text='Gedackt 8\'',
-	font=("", 7),
+        font=("", 7),
         variable=hiw_1,
         command=lambda: writeHiW1(hiwRegChan,hiw_1RegKey)
         )
@@ -406,7 +502,7 @@ if __name__ == "__main__":
     hiw_gedfl = tk.Checkbutton(
         root,
         text='Ged. Flöte 4\'',
-	font=("", 7),
+        font=("", 7),
         variable=hiw_2,
         command=lambda: writeHiW2(hiwRegChan,hiw_2RegKey)
         )
@@ -414,7 +510,7 @@ if __name__ == "__main__":
     hiw_wald = tk.Checkbutton(
         root,
         text='Waldflöte 2\'',
-	font=("", 7),
+        font=("", 7),
         variable=hiw_3,
         command=lambda: writeHiW3(hiwRegChan,hiw_3RegKey)
         )
@@ -422,7 +518,7 @@ if __name__ == "__main__":
     hiw_siff = tk.Checkbutton(
         root,
         text='Sifflöte',
-	font=("", 7),
+        font=("", 7),
         variable=hiw_4,
         command=lambda: writeHiW4(hiwRegChan,hiw_4RegKey)
         )
@@ -430,7 +526,7 @@ if __name__ == "__main__":
     ped_sub = tk.Checkbutton(
         root,
         text='Subbaß 16\'',
-	font=("", 7),
+        font=("", 7),
         variable=ped_1,
         command=lambda: writePed1(pedRegChan,ped_1RegKey)
         )
@@ -438,7 +534,7 @@ if __name__ == "__main__":
     ped_nacht = tk.Checkbutton(
         root,
         text='Nachthorn 4\'',
-	font=("", 7),
+        font=("", 7),
         variable=ped_2,
         command=lambda: writePed2(pedRegChan,ped_2RegKey)
         )
@@ -446,7 +542,7 @@ if __name__ == "__main__":
     kop_man = tk.Checkbutton(
         root,
         text='II/I',
-	font=("", 7),
+        font=("", 7),
         variable=kop_1,
         command=kop1_switchOff
         )
@@ -454,7 +550,7 @@ if __name__ == "__main__":
     kop_pedI = tk.Checkbutton(
         root,
         text='I/Ped',
-	font=("", 7),
+        font=("", 7),
         variable=kop_2,
         command=kop2_switchOff
         )
@@ -462,7 +558,7 @@ if __name__ == "__main__":
     kop_pedII = tk.Checkbutton(
         root,
         text='II/Ped',
-	font=("", 7),
+        font=("", 7),
         variable=kop_3,
         command=kop3_switchOff
         )
@@ -490,5 +586,13 @@ if __name__ == "__main__":
 
     #msg = mido.Message('note_on', channel=0, note=60)
     #msg3 = mido.Message('note_off', channel=0, note=60)
+
+    maintenance = tk.Button(
+      root,
+      text="Wartung",
+      command=maintenance_window
+      )
+
+    maintenance.place(x=280, y=440, anchor=tk.CENTER)
 
     root.mainloop()
