@@ -39,7 +39,7 @@ ped_2RegKey = 98
 
 #somehow port.panic() doesnt work on CH345
 def ownPanic():
-    for ch in range(2):
+    for ch in range(2): #This organ only has 3 divisions, so cleaning the first 3 channel is enough
       for noteNumber in range(127):
         msg = mido.Message('note_off', channel=ch, note=noteNumber)
         port.send(msg)
@@ -296,7 +296,7 @@ def maintenance_window():
     mwindow_next_tone = tk.Button(
       mwindow,
       text=">",
-      command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()+1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled')]
+      command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()+1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled'), print(tune_werk.get(), key.get())]
       )
 
     mwindow_next_tone.place(x=460, y=220, anchor=tk.CENTER)
@@ -304,7 +304,7 @@ def maintenance_window():
     mwindow_previous_tone = tk.Button(
       mwindow,
       text="<",
-      command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()-1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled')]
+      command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()-1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled'), print(tune_werk.get(), key.get())]
       )
 
     mwindow_previous_tone.place(x=100, y=220, anchor=tk.CENTER)
