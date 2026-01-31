@@ -339,6 +339,22 @@ def maintenance_window():
 
     mwindow_tune_STOP.place(x=280, y=300, anchor=tk.CENTER)
 
+    device = tk.Text(
+        mwindow,
+        height = 1,
+        width = 60,
+        state='disabled'
+        )
+
+    device.place(x=280, y=370, anchor=tk.CENTER)
+
+    device.config(state='normal')
+    device.delete("1.0", "end")
+    device.tag_configure("center", justify='center')
+    device.insert(tk.END, port)
+    device.tag_add("center", "1.0", "end")
+    device.config(state='disabled')
+
 ##########################################################
 
 if __name__ == "__main__":
