@@ -643,6 +643,6 @@ if __name__ == "__main__":
       font=("", 7)
       )
 
-    Version_Label.place(x=660, y=440, anchor=tk.CENTER)
+    Version_Label.place(x=660, y=440, anchor=tk.NW)
 
     root.mainloop()
