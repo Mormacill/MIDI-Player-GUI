@@ -4,7 +4,16 @@
 EXPATH=/home/user/Documents/MIDI-Player-GUI
 
 #Get MIDI device, if none is available, fallback to "Through"
-#python $EXPATH/mido-getDevice.py | grep
+if $(python $EXPATH/mido-getDevice.py | grep "CH345" > /dev/null)
+then
+  echo "Device CH345 found!"
+  DEVICE=$(python $EXPATH/mido-getDevice.py | sed -n "s/.*'\(CH345[^']*\)'.*/\1/p")
+  sed -i "s|^port = mido\.open_output.*|port = mido.open_output(\"$DEVICE\")|" $EXPATH/midi.py
+else
+  echo "Device CH345 not found, falling back to Through!"
+  DEVICE=$(python $EXPATH/mido-getDevice.py | sed -n "s/.*'\(Midi Through[^']*\)'.*/\1/p")
+  sed -i "s|^port = mido\.open_output.*|port = mido.open_output(\"$DEVICE\")|" $EXPATH/midi.py
+fi
 
 #Default path for USB-Mount on Raspberry Pi OS
 cd /media/user

@@ -16,7 +16,10 @@ import time
 #port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
 #CH345 USB-Midi
-port = mido.open_output('CH345:CH345 MIDI 1 28:0')
+#port = mido.open_output('CH345:CH345 MIDI 1 28:0')
+
+#Automatically set with bash start script
+port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
 ###
 hwRegChan = 2     #Stops all run via the pedal-interface since there are unused ports
