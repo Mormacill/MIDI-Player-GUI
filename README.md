@@ -20,5 +20,6 @@ and add
 [MIDI note numbers and center frequencies](https://inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies)<br/>
 [Mido docs](https://mido.readthedocs.io/en/stable/intro.html)<br/>
 [MIDECO user manual](https://www.midi-hardware.com/instrukcje/midecousman7.pdf)
+[Doepfer MTC64 manual](https://doepfer.de/pdf/MTC64_ANL.PDF)
 
 [LCD-Touch-Driver](https://github.com/goodtft/LCD-show)
