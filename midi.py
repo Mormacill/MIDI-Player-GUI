@@ -9,6 +9,8 @@ import mido
 import re
 import time
 
+VER = '1.2-EL'
+
 #todo
 #DONE -> if ownPanic() is called (e.g. stop pressed), leave register untouched
 
@@ -634,5 +636,13 @@ if __name__ == "__main__":
       )
 
     maintenance.place(x=280, y=440, anchor=tk.CENTER)
+
+    Version_Label = tk.Label(
+      root,
+      text='Version ' + tk.StringVar(value=VER).get(),
+      font=("", 7)
+      )
+
+    Version_Label.place(x=660, y=440, anchor=tk.CENTER)
 
     root.mainloop()
