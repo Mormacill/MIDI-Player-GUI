@@ -11,8 +11,12 @@ import time
 
 VER = '1.2-EL'
 
-#todo
-#DONE -> if ownPanic() is called (e.g. stop pressed), leave register untouched
+#TODO
+# * DONE -> if ownPanic() is called (e.g. stop pressed), leave register untouched
+# * Resize interface for 10,1' touch screen
+# * Set up with Fedora IOT
+# * Create a server-client network for communication between organ console and organ control unit and include "connection established" infos on interface
+# * Shutdown and reboot buttons on maintenance interface
 
 #Qsynth
 #port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
