@@ -14,7 +14,7 @@ replace splash.png file in
 open
 `/etc/xdg/lxsession/LXDE-pi/autostart`
 and add
-`@lxterminal -e bash /home/user/Documents/MIDI-Player-GUI/midi-start.sh`
+`@lxterminal -e bash /home/user/Documents/MIDI-Player-GUI/Source/midi-start.sh`
 
 ## Helpful sites
 [MIDI note numbers and center frequencies](https://inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies)<br/>
