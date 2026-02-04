@@ -17,6 +17,8 @@ VER = '1.2-EL'
 # * Set up with Fedora IOT
 # * Create a server-client network for communication between organ console and organ control unit and include "connection established" infos on interface
 # * Shutdown and reboot buttons on maintenance interface
+# * USB default mount point
+# * Splash screen
 
 #Qsynth
 #port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
@@ -258,6 +260,7 @@ def kop3_switchOff():
 def maintenance_window():
     mwindow = tk.Toplevel(root)
     mwindow.configure(bg='light goldenrod yellow')
+    mwindow.geometry("1280x800") #for 10.1 inch touch display
     mwindow.attributes('-fullscreen', True)
 
     tune_werk = tk.IntVar(mwindow, value=0)
@@ -369,8 +372,8 @@ def maintenance_window():
 if __name__ == "__main__":
     root = tk.Tk()
     root.title("MIDI-Player")
-    root.geometry("600x330")
-    root.tk.call('tk', 'scaling', 2) #default 1.25; 3 too large
+    root.geometry("1280x800") #for 10.1 inch touch display
+    root.tk.call('tk', 'scaling', 3) #default 1.25; 3 too large
     #maximized
     #root.attributes('-zoomed', True)
     #fullscreen
@@ -399,6 +402,7 @@ if __name__ == "__main__":
     start = tk.Button(
         root,
         text='Midi-Datei auswählen...',
+        #font=("", 14),
         command=lambda: Thread(target = playmidi).start()
         )
 
