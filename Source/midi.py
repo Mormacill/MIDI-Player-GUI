@@ -261,9 +261,24 @@ def kop3_switchOff():
 
 def shutdown_reboot_window(parent):
     srwin = tk.Toplevel(parent)
-    #srwin.configure(bg='light goldenrod yellow')
-    srwin.geometry("1280x800")
-    srwin.attributes('-fullscreen', True)
+    srwin.geometry("800x600")
+
+    #Window centering since it shall not be fullscreen
+    srwin.update_idletasks()
+    width = srwin.winfo_width()
+    height = srwin.winfo_height()
+    screen_width = srwin.winfo_screenwidth()
+    screen_height = srwin.winfo_screenheight()
+    x = (screen_width - width) // 2
+    y = (screen_height - height) // 2
+    srwin.geometry(f"{width}x{height}+{x}+{y}")
+
+    sr_label = tk.Label(
+        srwin,
+        text='Abmelden...',
+        )
+
+    sr_label.place(x=400, y=150, anchor=tk.CENTER)
 
     srwin_shutdown = tk.Button(
       srwin,
@@ -271,7 +286,7 @@ def shutdown_reboot_window(parent):
       command=lambda: os.system('shutdown -h now')
       )
 
-    srwin_shutdown.place(x=280, y=540, anchor=tk.CENTER)
+    srwin_shutdown.place(x=400, y=300, anchor=tk.CENTER)
 
     srwin_reboot = tk.Button(
       srwin,
@@ -279,7 +294,7 @@ def shutdown_reboot_window(parent):
       command=lambda: os.system('reboot')
       )
 
-    srwin_reboot.place(x=280, y=640, anchor=tk.CENTER)
+    srwin_reboot.place(x=400, y=440, anchor=tk.CENTER)
 
     srwin_back = tk.Button(
       srwin,
@@ -287,7 +302,7 @@ def shutdown_reboot_window(parent):
       command=lambda: srwin.destroy()
       )
 
-    srwin_back.place(x=280, y=740, anchor=tk.CENTER)
+    srwin_back.place(x=400, y=540, anchor=tk.CENTER)
 
 ##########################################################
 
@@ -408,7 +423,7 @@ def maintenance_window():
       command=lambda: shutdown_reboot_window(mwindow)
       )
 
-    logout.place(x=280, y=640, anchor=tk.CENTER)
+    logout.place(x=1100, y=720, anchor=tk.CENTER)
 
 ##########################################################
 
