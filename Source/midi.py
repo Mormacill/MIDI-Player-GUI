@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+#for shutdown and reboot
+import os
+
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
 
@@ -256,6 +259,38 @@ def kop3_switchOff():
 
 ##########################################################
 
+def shutdown_reboot_window(parent):
+    srwin = tk.Toplevel(parent)
+    #srwin.configure(bg='light goldenrod yellow')
+    srwin.geometry("1280x800")
+    srwin.attributes('-fullscreen', True)
+
+    srwin_shutdown = tk.Button(
+      srwin,
+      text="Herunterfahren",
+      command=lambda: os.system('shutdown -h now')
+      )
+
+    srwin_shutdown.place(x=280, y=540, anchor=tk.CENTER)
+
+    srwin_reboot = tk.Button(
+      srwin,
+      text="Neustarten",
+      command=lambda: os.system('reboot')
+      )
+
+    srwin_reboot.place(x=280, y=640, anchor=tk.CENTER)
+
+    srwin_back = tk.Button(
+      srwin,
+      text="Zurück",
+      command=lambda: srwin.destroy()
+      )
+
+    srwin_back.place(x=280, y=740, anchor=tk.CENTER)
+
+##########################################################
+
 #Wartungsfenster
 def maintenance_window():
     mwindow = tk.Toplevel(root)
@@ -366,6 +401,14 @@ def maintenance_window():
     device.insert(tk.END, port)
     device.tag_add("center", "1.0", "end")
     device.config(state='disabled')
+
+    logout = tk.Button(
+      mwindow,
+      text="Abmelden...",
+      command=lambda: shutdown_reboot_window(mwindow)
+      )
+
+    logout.place(x=280, y=640, anchor=tk.CENTER)
 
 ##########################################################
 
