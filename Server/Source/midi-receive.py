@@ -10,9 +10,9 @@ address = 'localhost:9080'
 
 print(f'Serving on {address}')
 
-host, port = sockets.parse_address(address)
+host, webport = sockets.parse_address(address)
 
-with sockets.PortServer(host, port) as server:
+with sockets.PortServer(host, webport) as server:
     while True:
         try:
             client = server.accept(block=False)
