@@ -18,10 +18,12 @@ fi
 #Default path for USB-Mount on Raspberry Pi OS
 #cd /media/user
 
+#Start Server
+python -u $EXPATH/Source/midi-receive.py > /tmp/log.log 2>&1 &
+sleep 3
+
 #Infinite loop for auto restart if app closed or crashed
 while :
   do
-    python -u $EXPATH/Source/midi-receive.py > /tmp/log.log 2>&1 &
-    sleep 3
-    python $EXPATH/Source/midi-receive-GUI.py &
+    python $EXPATH/Source/midi-receive-GUI.py
   done
