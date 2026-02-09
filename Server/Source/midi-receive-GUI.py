@@ -17,7 +17,7 @@ def refreshlog():
     tb2.delete("1.0", "end")
     tb2.insert(tk.END, taillog())
     tb2.config(state='disabled')
-    root.after(1000, refreshlog)
+    root.after(100, refreshlog)
 
 if __name__ == "__main__":
     root = tk.Tk()
