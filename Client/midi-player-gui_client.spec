@@ -40,13 +40,14 @@ MIDI-Player-GUI All-in-One package including midi files, GUI-dependencies like .
 %install
 
 install -d %{buildroot}/%{themedir}
-install -m 644 -p plymouth/mpg-organ.plymouth plymouth/mpg-organ.script -t %{buildroot}/%{themedir}
-install -m 644 -p plymouth/mpg-splash.png -t %{buildroot}/%{themedir}
+install -m 644 -p Client/plymouth/mpg-organ.plymouth -t %{buildroot}/%{themedir}
+install -m 644 -p Client/plymouth/mpg-organ.script -t %{buildroot}/%{themedir}
+install -m 644 -p Client/plymouth/mpg-splash.png -t %{buildroot}/%{themedir}
 
 install -d %{buildroot}/%{optdir}/%{name}/Source
-install -m 644 -p Source/midi.py -t %{buildroot}/%{optdir}/%{name}/Source
-install -m 644 -p Source/mido-getDevice.py -t %{buildroot}/%{optdir}/%{name}/Source
-install -m 644 -p midi-start.sh -t %{buildroot}/%{optdir}/%{name}
+install -m 644 -p Client/Source/midi.py -t %{buildroot}/%{optdir}/%{name}/Source
+install -m 644 -p Client/Source/mido-getDevice.py -t %{buildroot}/%{optdir}/%{name}/Source
+install -m 644 -p Client/midi-start.sh -t %{buildroot}/%{optdir}/%{name}
 
 %files
 #Plymouth theme
