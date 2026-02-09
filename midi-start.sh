@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Path to midi.py
-EXPATH=/home/user/Documents/MIDI-Player-GUI
+EXPATH=/opt/MIDI-Player-GUI
 
 #Get MIDI device, if none is available, fallback to "Through"
 if $(python $EXPATH/Source/mido-getDevice.py | grep "CH345" > /dev/null)
@@ -16,7 +16,7 @@ else
 fi
 
 #Default path for USB-Mount on Raspberry Pi OS
-cd /media/user
+#cd /media/user
 
 #Give current IP if connected to Wifi
 ifconfig | grep inet

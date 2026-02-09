@@ -1,0 +1,13 @@
+image = Image("mpg-splash.png");
+
+sw = Window.GetWidth();
+sh = Window.GetHeight();
+
+iw = image.GetWidth();
+ih = image.GetHeight();
+
+x = (sw - iw) / 2;
+y = (sh - ih) / 2;
+
+sprite = Sprite(image);
+sprite.SetPosition(x, y, 0);

@@ -1,0 +1,9 @@
+[Plymouth Theme]
+Name=My Custom Boot
+Description=Static image splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/mpg-organ
+ScriptFile=/usr/share/plymouth/themes/mpg-organ/mpg-organ.script
+
