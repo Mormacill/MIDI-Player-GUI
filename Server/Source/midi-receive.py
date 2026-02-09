@@ -1,56 +1,24 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 
-import tkinter as tk
-import subprocess
+import mido
+from mido import sockets
 
+#Automatically set with bash start script
+port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
-def getServerAddress():
-    server = subprocess.check_output("/usr/bin/head -n 1 /tmp/log.log", shell=True)
-    return server.decode("utf-8")
+address = 'localhost:9080'
 
-def taillog():
-    s = subprocess.check_output("/usr/bin/tail -n 10 /tmp/log.log", shell=True)
-    return s.decode("utf-8")
+print(f'Serving on {address}')
 
-def refreshlog():
-    tb2.config(state='normal')
-    tb2.delete("1.0", "end")
-    tb2.insert(tk.END, taillog())
-    tb2.config(state='disabled')
-    root.after(1000, refreshlog)
+host, port = sockets.parse_address(address)
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    root.title("MIDI-Player-Server")
-    root.geometry("800x480") #for 5 inch touch display
-    root.tk.call('tk', 'scaling', 2) #default 1.25; 3 too large
-    #maximized
-    #root.attributes('-zoomed', True)
-    #fullscreen
-    root.attributes('-fullscreen', True)
-
-    tb1 = tk.Text(
-        root,
-        height = 1,
-        width = 30,
-        state='normal'
-        )
-
-    tb1.place(x=400, y=50, anchor=tk.CENTER)
-
-    tb1.insert(tk.END, getServerAddress())
-
-    tb2 = tk.Text(
-        root,
-        height = 10,
-        width = 80,
-        state='disabled'
-        )
-
-    tb2.place(x=400, y=200, anchor=tk.CENTER)
-
-
-    print(taillog())
-    refreshlog()
-
-    root.mainloop()
+with sockets.PortServer(host, port) as server:
+    while True:
+        try:
+            client = server.accept(block=False)
+            if client:
+                for message in client:
+                    print(message)
+                    port.send(message)
+        except KeyboardInterrupt:
+            break
