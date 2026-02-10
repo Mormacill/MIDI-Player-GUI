@@ -75,6 +75,9 @@ install -m 644 -p Config/xinitrc-client -t %{buildroot}/%{optdir}/%{name}/Config
 install -m 644 -p Config/bashrc-client -t %{buildroot}/%{optdir}/%{name}/Config
 install -m 644 -p README.md -t %{buildroot}/%{optdir}/%{name}
 
+install -d %{buildroot}/%{_sysconfdir}/udev/rules.d
+install -m 644 -p Config/90-usb-automount.rules -t %{buildroot}/%{_sysconfdir}/udev/rules.d
+
 #Server
 install -d %{buildroot}/%{optdir}/%{name}/Source
 install -m 644 -p Server/Source/midi-receive.py -t %{buildroot}/%{optdir}/%{name}/Source
@@ -98,6 +101,9 @@ install -m 644 -p Server/midi-start-server.sh -t %{buildroot}/%{optdir}/%{name}
 %{optdir}/%{name}/Config/bashrc-client
 %{optdir}/%{name}/README.md
 
+#USB mount
+%{_sysconfdir}/udev/rules.d/90-usb-automount.rules
+
 %post client
 
 %files server
@@ -110,5 +116,5 @@ install -m 644 -p Server/midi-start-server.sh -t %{buildroot}/%{optdir}/%{name}
 %post server
 
 %changelog
-* Mon Feb 09 2026 Morma Cill <> - 1.2.0el
+* Wed Feb 11 2026 Morma Cill <> - 1.2.0el
 - Created theme and other client stuff

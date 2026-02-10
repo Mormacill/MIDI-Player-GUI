@@ -15,8 +15,8 @@ else
   sed -i "s|^port = mido\.open_output.*|port = mido.open_output(\"$DEVICE\")|" $EXPATH/Source/midi.py
 fi
 
-#Default path for USB-Mount on Raspberry Pi OS
-#cd /media/user
+#Configured path for USB-Mount via udev rule
+cd /media
 
 #Give current IP if connected to Wifi
 ifconfig | grep inet

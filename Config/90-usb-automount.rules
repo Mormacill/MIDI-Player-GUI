@@ -1,0 +1,1 @@
+ACTION=="add", SUBSYSTEM=="block", ENV{DEVTYPE}=="partition", ENV{ID_BUS}=="usb", RUN+="/usr/bin/systemd-mount --no-block --automount=yes --collect $env{DEVNAME} /media/%k"
