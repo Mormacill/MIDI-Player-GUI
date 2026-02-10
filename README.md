@@ -3,7 +3,24 @@
 ## FedoraIOT (rpm-ostree)
 
 On Client:<br/>
-`dnf install MIDI-Player-GUI-client`
+Enable autologin on default user:<br/>
+`sudo systemctl edit getty@tty1`<br/>
+
+Add the following lines:
+```
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin user --noclear %I $TERM
+```
+Close and exit, then reboot. Autologin should now be enabled.<br/><br/>
+
+To install the main package:
+`dnf install MIDI-Player-GUI-client`<br/>
+After installing restart system.
+
+### Install pip packages
+To install mido and python-rtmidi do:<br/>
+`pip install mido python-rtmidi`
 
 ### Change splash screen
 
@@ -18,10 +35,10 @@ and<br/>
 ### Autostart X-Server
 
 Copy xinitrc file from source directory as normal user:<br/>
-`cat /opt/MIDI-Player-GUI/Config/xinitrc > $PWD/.xinitrc`
+`cat /opt/MIDI-Player-GUI/Config/xinitrc-client > $PWD/.xinitrc`
 
 Add startx to bashrc by:<br/>
-`cat /opt/MIDI-Player-GUI/Config/bashrc >> $PWD/.bashrc`<br/>
+`cat /opt/MIDI-Player-GUI/Config/bashrc-client >> $PWD/.bashrc`<br/>
 Uncomment the startx-Midi function when ready.
 
 

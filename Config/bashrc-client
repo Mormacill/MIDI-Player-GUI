@@ -1,3 +1,4 @@
+
 function startx-Midi
 {
 if [ "$(tty)" = "/dev/tty1" ]; then

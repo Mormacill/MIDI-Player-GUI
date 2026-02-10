@@ -1,0 +1,3 @@
+#!/bin/sh
+openbox &
+exec /usr/bin/bash /opt/MIDI-Player-GUI/midi-start-client.sh
