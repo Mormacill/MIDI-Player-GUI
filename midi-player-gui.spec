@@ -89,18 +89,6 @@ install -m 644 -p Server/midi-start.sh -t %{buildroot}/%{optdir}/%{name}
 %{optdir}/%{name}/midi-start.sh
 
 %post client
-if [ -d /sysroot/ostree ]
-then
-    echo "rpm-ostree booted system"
-    echo "After next reboot run:"
-    echo "  plymouth-set-default-theme mpg-organ"
-    echo "  pip install mido python-rtmidi"
-else
-%{_bindir}/plymouth-set-default-theme mpg-organ
-
-%{_bindir}/pip install mido python-rtmidi
-fi
-
 
 %files server
 #Midi files
@@ -110,14 +98,6 @@ fi
 %{optdir}/%{name}/midi-start.sh
 
 %post server
-if [ -d /sysroot/ostree ]
-then
-    echo "rpm-ostree booted system"
-    echo "After next reboot run:"
-    echo "  pip install mido python-rtmidi"
-else
-%{_bindir}/pip install mido python-rtmidi
-fi
 
 %changelog
 * Mon Feb 09 2026 Morma Cill <> - 1.2.0el
