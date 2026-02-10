@@ -1,20 +1,30 @@
 # MIDI-Player-GUI
 
-## debian bzw. raspian
+## FedoraIOT (rpm-ostree)
 
-`apt install python3-tk python3-mido python3-rtmidi`
+On Client:
+`dnf install MIDI-Player-GUI-client`
 
-## Change splash screen
+### Change splash screen
 
-replace splash.png file in
-`/usr/share/plymouth/themes/pix/`
+New theme is installed with rpm, set it explicitly with:
+`plymouth-set-default-theme mpg-organ`
 
-## Add bash script to autostart
+Add necessarykernel arguments by:
+`sudo rpm-ostree initramfs --enable`
+and
+`sudo rpm-ostree kargs --append="quiet splash"`
 
-open
-`/etc/xdg/lxsession/LXDE-pi/autostart`
-and add
-`@lxterminal -e bash /home/user/Documents/MIDI-Player-GUI/Source/midi-start.sh`
+### Autostart X-Server
+
+Copy xinitrc file from source directory as normal user:
+`cat /opt/MIDI-Player-GUI/Config/xinitrc > $PWD/.xinitrc`
+
+Add startx to bashrc by:
+`cat /opt/MIDI-Player-GUI/Config/bashrc >> $PWD/.bashrc`
+Uncomment the startx-Midi function when ready.
+
+
 
 ## Helpful sites
 [MIDI note numbers and center frequencies](https://inspiredacoustics.com/en/MIDI_note_numbers_and_center_frequencies)<br/>

@@ -70,6 +70,11 @@ install -m 644 -p Client/Source/midi.py -t %{buildroot}/%{optdir}/%{name}/Source
 install -m 644 -p Client/Source/mido-getDevice.py -t %{buildroot}/%{optdir}/%{name}/Source
 install -m 644 -p Client/midi-start.sh -t %{buildroot}/%{optdir}/%{name}
 
+install -d %{buildroot}/%{optdir}/%{name}/Config
+install -m 644 -p Config/xinitrc -t %{buildroot}/%{optdir}/%{name}/Config
+install -m 644 -p Config/bashrc -t %{buildroot}/%{optdir}/%{name}/Config
+install -m 644 -p README.md -t %{buildroot}/%{optdir}/%{name}
+
 #Server
 install -d %{buildroot}/%{optdir}/%{name}/Source
 install -m 644 -p Server/Source/midi-receive.py -t %{buildroot}/%{optdir}/%{name}/Source
@@ -87,6 +92,11 @@ install -m 644 -p Server/midi-start.sh -t %{buildroot}/%{optdir}/%{name}
 %{optdir}/%{name}/Source/midi.py
 %{optdir}/%{name}/Source/mido-getDevice.py
 %{optdir}/%{name}/midi-start.sh
+
+#X files
+%{optdir}/%{name}/Config/xinitrc
+%{optdir}/%{name}/Config/bashrc
+%{optdir}/%{name}/README.md
 
 %post client
 
