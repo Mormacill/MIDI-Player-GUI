@@ -2,26 +2,26 @@
 
 ## FedoraIOT (rpm-ostree)
 
-On Client:
+On Client:<br/>
 `dnf install MIDI-Player-GUI-client`
 
 ### Change splash screen
 
-New theme is installed with rpm, set it explicitly with:
+New theme is installed with rpm, set it explicitly with:<br/>
 `plymouth-set-default-theme mpg-organ`
 
-Add necessarykernel arguments by:
-`sudo rpm-ostree initramfs --enable`
-and
+Add necessarykernel arguments by:<br/>
+`sudo rpm-ostree initramfs --enable`<br/>
+and<br/>
 `sudo rpm-ostree kargs --append="quiet splash"`
 
 ### Autostart X-Server
 
-Copy xinitrc file from source directory as normal user:
+Copy xinitrc file from source directory as normal user:<br/>
 `cat /opt/MIDI-Player-GUI/Config/xinitrc > $PWD/.xinitrc`
 
-Add startx to bashrc by:
-`cat /opt/MIDI-Player-GUI/Config/bashrc >> $PWD/.bashrc`
+Add startx to bashrc by:<br/>
+`cat /opt/MIDI-Player-GUI/Config/bashrc >> $PWD/.bashrc`<br/>
 Uncomment the startx-Midi function when ready.
 
 
