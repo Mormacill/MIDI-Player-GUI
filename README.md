@@ -14,7 +14,7 @@ ExecStart=-/sbin/agetty --autologin user --noclear %I $TERM
 ```
 Close and exit, then reboot. Autologin should now be enabled.<br/><br/>
 
-To install the main package:
+To install the main package:<br/>
 `dnf install MIDI-Player-GUI-client`<br/>
 After installing restart system.
 
