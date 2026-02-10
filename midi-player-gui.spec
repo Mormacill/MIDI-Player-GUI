@@ -31,6 +31,7 @@ Requires:       plymouth
 Requires:       plymouth-plugin-script
 Requires:       plymouth-graphics-libs
 Requires:       net-tools
+Requires:       systemd-udev
 
 %description    client
 MIDI-Player-GUI client package including midi files, GUI-dependencies like .xinitrc file and a plymouth splash screen and stuff for sending midi messages
