@@ -48,12 +48,12 @@ sudo rpm-ostree kargs --append="quiet splash"
 
 Copy xinitrc file from source directory as normal user:
 ```
-cat /opt/MIDI-Player-GUI/Config/xinitrc-client > $PWD/.xinitrc
+cat /opt/MIDI-Player-GUI/Config/xinitrc-client > $HOME/.xinitrc
 ```
 
 Add startx to bashrc by:
 ```
-cat /opt/MIDI-Player-GUI/Config/bashrc-client >> $PWD/.bashrc
+cat /opt/MIDI-Player-GUI/Config/bashrc-client >> $HOME/.bashrc
 ```
 Uncomment the startx-Midi function when ready.
 
