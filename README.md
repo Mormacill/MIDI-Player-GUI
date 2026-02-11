@@ -32,10 +32,10 @@ pip install mido python-rtmidi
 
 New theme is installed with rpm, set it explicitly with:
 ```
-plymouth-set-default-theme mpg-organ
+sudo plymouth-set-default-theme mpg-organ
 ```
 
-Add necessarykernel arguments by:
+Add necessary kernel arguments by:
 ```
 sudo rpm-ostree initramfs --enable
 ```
