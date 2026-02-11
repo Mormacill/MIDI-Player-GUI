@@ -18,7 +18,7 @@ Close and exit, then reboot. Autologin should now be enabled.<br/><br/>
 
 To install the main package:
 ```
-dnf install MIDI-Player-GUI-client
+sudo rpm-ostree install ./MIDI-Player-GUI-client
 ```
 After installing restart system.
 
