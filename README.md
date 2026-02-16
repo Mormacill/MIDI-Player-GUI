@@ -41,7 +41,7 @@ sudo rpm-ostree initramfs --enable
 ```
 and
 ```
-sudo rpm-ostree kargs --append="quiet splash"
+sudo rpm-ostree kargs --append="quiet splash console=tty1" --delete=modprobe.blacklist=vc4
 ```
 
 ### Autostart X-Server
