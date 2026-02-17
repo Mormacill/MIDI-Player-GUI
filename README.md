@@ -39,9 +39,13 @@ Add necessary kernel arguments by:
 ```
 sudo rpm-ostree initramfs --enable
 ```
-and
+and (for Raspberry Zero 2 W)
 ```
 sudo rpm-ostree kargs --append="quiet splash console=tty1 initcall_blacklist=simpledrm_platform_driver_init" --delete=modprobe.blacklist=vc4
+```
+for x64 based systems (e.g. miniPC)
+```
+sudo rpm-ostree kargs --append="quiet splash"
 ```
 
 ### Autostart X-Server
