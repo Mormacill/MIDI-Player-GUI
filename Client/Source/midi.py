@@ -2,6 +2,7 @@
 
 #for shutdown and reboot
 import os
+import subprocess
 
 import tkinter as tk
 from tkinter.filedialog import askopenfilename
@@ -50,6 +51,11 @@ hiw_4RegKey = 75
 ped_1RegKey = 76
 ped_2RegKey = 77
 ###
+
+#get client IP Adress on wifi
+def getClientIP():
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show wlp0s18f2u1 | awk '{print $2}'", shell=True)
+    return cIP.decode("utf-8")
 
 #somehow port.panic() doesnt work on CH345
 def ownPanic():
@@ -324,7 +330,7 @@ def maintenance_window():
       text="Schließen",
       command=lambda: [mwindow.destroy(), ownPanic()]
       )
-    mwindow_close.place(x=280, y=440, anchor=tk.CENTER)
+    mwindow_close.place(x=280, y=720, anchor=tk.CENTER)
 
     mwindow_tune_hw = tk.Button(
       mwindow,
@@ -416,6 +422,22 @@ def maintenance_window():
     device.insert(tk.END, port)
     device.tag_add("center", "1.0", "end")
     device.config(state='disabled')
+
+    clientIP = tk.Text(
+        mwindow,
+        height = 1,
+        width = 18,
+        state='disabled'
+        )
+
+    clientIP.place(x=280, y=470, anchor=tk.CENTER)
+
+    clientIP.config(state='normal')
+    clientIP.delete("1.0", "end")
+    clientIP.tag_configure("center", justify='center')
+    clientIP.insert(tk.END, getClientIP())
+    clientIP.tag_add("center", "1.0", "end")
+    clientIP.config(state='disabled')
 
     logout = tk.Button(
       mwindow,
