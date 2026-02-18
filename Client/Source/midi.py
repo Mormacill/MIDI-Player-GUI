@@ -54,7 +54,7 @@ ped_2RegKey = 77
 
 #get client IP Adress on wifi
 def getClientIP():
-    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show wlp0s18f2u1 | awk '{print $2}'", shell=True)
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show wlp0s18f2u1 | /usr/sbin/awk '{print $2}'", shell=True)
     return cIP.decode("utf-8")
 
 #somehow port.panic() doesnt work on CH345
