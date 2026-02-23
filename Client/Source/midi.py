@@ -53,8 +53,13 @@ ped_2RegKey = 77
 ###
 
 #get client IP Adress on wifi
-def getClientIP():
+def getClientIPwifi():
     cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show wlp0s18f2u1 | /usr/sbin/awk '{print $2}'", shell=True)
+    return cIP.decode("utf-8")
+
+#get client IP Adress on LAN
+def getClientIPlan():
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show enp1s0 | /usr/sbin/awk '{print $2}'", shell=True)
     return cIP.decode("utf-8")
 
 #somehow port.panic() doesnt work on CH345
@@ -267,7 +272,7 @@ def kop3_switchOff():
 
 def shutdown_reboot_window(parent):
     srwin = tk.Toplevel(parent)
-    srwin.geometry("800x600")
+    srwin.geometry("400x500")
 
     #Window centering since it shall not be fullscreen
     srwin.update_idletasks()
@@ -284,7 +289,7 @@ def shutdown_reboot_window(parent):
         text='Abmelden...',
         )
 
-    sr_label.place(x=400, y=150, anchor=tk.CENTER)
+    sr_label.place(x=200, y=50, anchor=tk.CENTER)
 
     srwin_shutdown = tk.Button(
       srwin,
@@ -292,7 +297,7 @@ def shutdown_reboot_window(parent):
       command=lambda: os.system('shutdown -h now')
       )
 
-    srwin_shutdown.place(x=400, y=300, anchor=tk.CENTER)
+    srwin_shutdown.place(x=200, y=170, anchor=tk.CENTER)
 
     srwin_reboot = tk.Button(
       srwin,
@@ -300,7 +305,7 @@ def shutdown_reboot_window(parent):
       command=lambda: os.system('reboot')
       )
 
-    srwin_reboot.place(x=400, y=440, anchor=tk.CENTER)
+    srwin_reboot.place(x=200, y=290, anchor=tk.CENTER)
 
     srwin_back = tk.Button(
       srwin,
@@ -308,7 +313,7 @@ def shutdown_reboot_window(parent):
       command=lambda: srwin.destroy()
       )
 
-    srwin_back.place(x=400, y=540, anchor=tk.CENTER)
+    srwin_back.place(x=200, y=410, anchor=tk.CENTER)
 
 ##########################################################
 
@@ -330,7 +335,7 @@ def maintenance_window():
       text="Schließen",
       command=lambda: [mwindow.destroy(), ownPanic()]
       )
-    mwindow_close.place(x=280, y=720, anchor=tk.CENTER)
+    mwindow_close.place(x=50, y=720, anchor=tk.W)
 
     mwindow_tune_hw = tk.Button(
       mwindow,
@@ -339,7 +344,7 @@ def maintenance_window():
       command=lambda: [ownPanic(), tune_werk.set(0), mwindow_tune_hw.config(bg='red'), mwindow_tune_hiw.config(bg='light gray'), mwindow_tune_ped.config(bg='light gray')]
       )
 
-    mwindow_tune_hw.place(x=100, y=50, anchor=tk.CENTER)
+    mwindow_tune_hw.place(x=50, y=100, anchor=tk.W)
 
     mwindow_tune_hiw = tk.Button(
       mwindow,
@@ -347,7 +352,7 @@ def maintenance_window():
       command=lambda: [ownPanic(), tune_werk.set(1), mwindow_tune_hw.config(bg='light gray'), mwindow_tune_hiw.config(bg='red'), mwindow_tune_ped.config(bg='light gray')]
       )
 
-    mwindow_tune_hiw.place(x=280, y=50, anchor=tk.CENTER)
+    mwindow_tune_hiw.place(x=400, y=100, anchor=tk.CENTER)
 
     mwindow_tune_ped = tk.Button(
       mwindow,
@@ -355,7 +360,7 @@ def maintenance_window():
       command=lambda: [ownPanic(), tune_werk.set(2), mwindow_tune_hw.config(bg='light gray'), mwindow_tune_hiw.config(bg='light gray'), mwindow_tune_ped.config(bg='red')]
       )
 
-    mwindow_tune_ped.place(x=460, y=50, anchor=tk.CENTER)
+    mwindow_tune_ped.place(x=670, y=100, anchor=tk.E)
 
     mwindow_tune_START = tk.Button(
       mwindow,
@@ -363,7 +368,7 @@ def maintenance_window():
       command=lambda: [key.set(36), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled')]
       )
 
-    mwindow_tune_START.place(x=280, y=120, anchor=tk.CENTER)
+    mwindow_tune_START.place(x=400, y=230, anchor=tk.CENTER)
 
     mwindow_next_tone = tk.Button(
       mwindow,
@@ -371,7 +376,7 @@ def maintenance_window():
       command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()+1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled'), print(tune_werk.get(), key.get())]
       )
 
-    mwindow_next_tone.place(x=460, y=220, anchor=tk.CENTER)
+    mwindow_next_tone.place(x=600, y=380, anchor=tk.CENTER)
 
     mwindow_previous_tone = tk.Button(
       mwindow,
@@ -379,7 +384,7 @@ def maintenance_window():
       command=lambda: [noteOFF(tune_werk.get(), key.get()), key.set(key.get()-1), noteON(tune_werk.get(), key.get()), current_tone_box.config(state='normal'), current_tone_box.delete("1.0", "end"), current_tone_box.tag_configure("center", justify='center'), current_tone_box.insert(tk.END, array_notes[key.get()-36]), current_tone_box.tag_add("center", "1.0", "end"), current_tone_box.config(state='disabled'), print(tune_werk.get(), key.get())]
       )
 
-    mwindow_previous_tone.place(x=100, y=220, anchor=tk.CENTER)
+    mwindow_previous_tone.place(x=200, y=380, anchor=tk.CENTER)
 
     current_tone_Label = tk.Label(
         mwindow,
@@ -387,7 +392,7 @@ def maintenance_window():
         bg='light goldenrod yellow'
         )
 
-    current_tone_Label.place(x=280, y=190, anchor=tk.CENTER)
+    current_tone_Label.place(x=400, y=320, anchor=tk.CENTER)
 
     current_tone_box = tk.Text(
         mwindow,
@@ -397,7 +402,7 @@ def maintenance_window():
         font=("", 14)
         )
 
-    current_tone_box.place(x=280, y=220, anchor=tk.CENTER)
+    current_tone_box.place(x=400, y=380, anchor=tk.CENTER)
 
     mwindow_tune_STOP = tk.Button(
       mwindow,
@@ -405,39 +410,79 @@ def maintenance_window():
       command=ownPanic
       )
 
-    mwindow_tune_STOP.place(x=280, y=300, anchor=tk.CENTER)
+    mwindow_tune_STOP.place(x=400, y=480, anchor=tk.CENTER)
 
     device = tk.Text(
         mwindow,
         height = 1,
-        width = 60,
+        width = 40,
         state='disabled'
         )
 
-    device.place(x=280, y=370, anchor=tk.CENTER)
+    device.place(x=1230, y=600, anchor=tk.E)
 
     device.config(state='normal')
     device.delete("1.0", "end")
     device.tag_configure("center", justify='center')
-    device.insert(tk.END, port)
+    device.insert(tk.END, port.name)
     device.tag_add("center", "1.0", "end")
     device.config(state='disabled')
 
-    clientIP = tk.Text(
+    device_Label = tk.Label(
+        mwindow,
+        text='Gerät:',
+        bg='light goldenrod yellow'
+        )
+
+    device_Label.place(x=1230, y=550, anchor=tk.E)
+
+    clientIP_wifi = tk.Text(
         mwindow,
         height = 1,
         width = 18,
         state='disabled'
         )
 
-    clientIP.place(x=280, y=470, anchor=tk.CENTER)
+    clientIP_wifi.place(x=1230, y=470, anchor=tk.E)
 
-    clientIP.config(state='normal')
-    clientIP.delete("1.0", "end")
-    clientIP.tag_configure("center", justify='center')
-    clientIP.insert(tk.END, getClientIP())
-    clientIP.tag_add("center", "1.0", "end")
-    clientIP.config(state='disabled')
+    clientIP_wifi.config(state='normal')
+    clientIP_wifi.delete("1.0", "end")
+    clientIP_wifi.tag_configure("center", justify='center')
+    clientIP_wifi.insert(tk.END, getClientIPwifi())
+    clientIP_wifi.tag_add("center", "1.0", "end")
+    clientIP_wifi.config(state='disabled')
+
+    clientIP_wifi_Label = tk.Label(
+        mwindow,
+        text='WLAN-IP:',
+        bg='light goldenrod yellow'
+        )
+
+    clientIP_wifi_Label.place(x=1230, y=420, anchor=tk.E)
+
+    clientIP_LAN = tk.Text(
+        mwindow,
+        height = 1,
+        width = 18,
+        state='disabled'
+        )
+
+    clientIP_LAN.place(x=1230, y=340, anchor=tk.E)
+
+    clientIP_LAN.config(state='normal')
+    clientIP_LAN.delete("1.0", "end")
+    clientIP_LAN.tag_configure("center", justify='center')
+    clientIP_LAN.insert(tk.END, getClientIPlan())
+    clientIP_LAN.tag_add("center", "1.0", "end")
+    clientIP_LAN.config(state='disabled')
+
+    clientIP_LAN_Label = tk.Label(
+        mwindow,
+        text='LAN-IP:',
+        bg='light goldenrod yellow'
+        )
+
+    clientIP_LAN_Label.place(x=1230, y=290, anchor=tk.E)
 
     logout = tk.Button(
       mwindow,
@@ -445,7 +490,7 @@ def maintenance_window():
       command=lambda: shutdown_reboot_window(mwindow)
       )
 
-    logout.place(x=1100, y=720, anchor=tk.CENTER)
+    logout.place(x=1230, y=720, anchor=tk.E)
 
 ##########################################################
 
@@ -486,7 +531,7 @@ if __name__ == "__main__":
         command=lambda: Thread(target = playmidi).start()
         )
 
-    start.place(x=280, y=50, anchor=tk.CENTER)
+    start.place(x=300, y=100, anchor=tk.CENTER)
 
     tb = tk.Text(
         root,
@@ -495,7 +540,7 @@ if __name__ == "__main__":
         state='disabled'
         )
 
-    tb.place(x=280, y=120, anchor=tk.CENTER)
+    tb.place(x=300, y=190, anchor=tk.CENTER)
 
     speedSlider = tk.Scale(
         root,
@@ -503,14 +548,14 @@ if __name__ == "__main__":
         to=130,
         orient=tk.HORIZONTAL,
         relief=tk.FLAT,
-        length=300,
+        length=400,
         width=40,
         tickinterval=30,
         variable=speed_multiplier,
         font=("", 7)
         )
 
-    speedSlider.place(x=280, y=280, anchor=tk.CENTER)
+    speedSlider.place(x=300, y=380, anchor=tk.CENTER)
 
     speedReset = tk.Button(
         root,
@@ -518,7 +563,7 @@ if __name__ == "__main__":
         command=lambda: speed_multiplier.set(100)
         )
 
-    speedReset.place(x=280, y=380, anchor=tk.CENTER)
+    speedReset.place(x=300, y=480, anchor=tk.CENTER)
 
     registerReset = tk.Button(
         root,
@@ -527,7 +572,7 @@ if __name__ == "__main__":
         command=lambda: regres(0)
         )
 
-    registerReset.place(x=750, y=400, anchor=tk.CENTER)
+    registerReset.place(x=890, y=620, anchor=tk.CENTER)
 
     registerTutti = tk.Button(
         root,
@@ -536,7 +581,7 @@ if __name__ == "__main__":
         command=lambda: regres(1)
         )
 
-    registerTutti.place(x=660, y=400, anchor=tk.CENTER)
+    registerTutti.place(x=795, y=620, anchor=tk.CENTER)
 
     stop = tk.Button(
         root,
@@ -544,178 +589,178 @@ if __name__ == "__main__":
         command=stopplayback
         )
 
-    stop.place(x=280, y=185, anchor=tk.CENTER)
+    stop.place(x=300, y=270, anchor=tk.CENTER)
 
     quit = tk.Button(
         root,
-        text='quit',
+        text='Beenden',
         command=quit
         )
 
-    quit.place(x=80, y=440, anchor=tk.CENTER)
+    quit.place(x=50, y=720, anchor=tk.W)
 
     HW_Label = tk.Label(
         root,
         text='Hauptwerk',
-        font=("", 7),
+        font=("", 7, "bold"),
         )
 
-    HW_Label.place(x=486, y=190, anchor=tk.NW)
+    HW_Label.place(x=725, y=150, anchor=tk.W)
 
     HIW_Label = tk.Label(
         root,
         text='Hinterwerk',
-        font=("", 7)
+        font=("", 7, "bold")
         )
 
-    HIW_Label.place(x=650, y=190, anchor=tk.NW)
+    HIW_Label.place(x=1025, y=150, anchor=tk.W)
 
     PED_Label = tk.Label(
         root,
         text='Pedal',
-        font=("", 7)
+        font=("", 7, "bold")
         )
 
-    PED_Label.place(x=486, y=370, anchor=tk.NW)
+    PED_Label.place(x=725, y=420, anchor=tk.W)
 
     KOP_Label = tk.Label(
         root,
         text='Koppeln',
-        font=("", 7)
+        font=("", 7, "bold")
         )
 
-    KOP_Label.place(x=650, y=40, anchor=tk.NW)
+    KOP_Label.place(x=1025, y=420, anchor=tk.W)
 
     hw_rohr = tk.Checkbutton(
         root,
-        text='Rohrflöte 8\'',
+        text=' Rohrflöte 8\'',
         font=("", 7),
         variable=hw_1,
         command=lambda: writeHW1(hwRegChan,hw_1RegKey)
         )
 
-    hw_rohr.place(x=450, y=230, anchor=tk.NW)
+    hw_rohr.place(x=700, y=200, anchor=tk.W)
 
     hw_prinz = tk.Checkbutton(
         root,
-        text='Prinzipal 4\'',
+        text=' Prinzipal 4\'',
         font=("", 7),
         variable=hw_2,
         #font=("", 10),
         command=lambda: writeHW2(hwRegChan,hw_2RegKey)
         )
 
-    hw_prinz.place(x=450, y=260, anchor=tk.NW)
+    hw_prinz.place(x=700, y=240, anchor=tk.W)
 
     hw_okt = tk.Checkbutton(
         root,
-        text='Oktave 2\'',
+        text=' Oktave 2\'',
         font=("", 7),
         variable=hw_3,
         command=lambda: writeHW3(hwRegChan,hw_3RegKey)
         )
 
-    hw_okt.place(x=450, y=290, anchor=tk.NW)
+    hw_okt.place(x=700, y=280, anchor=tk.W)
 
     hw_mix = tk.Checkbutton(
         root,
-        text='Mixtur',
+        text=' Mixtur',
         font=("", 7),
         variable=hw_4,
         command=lambda: writeHW4(hwRegChan,hw_4RegKey)
         )
 
-    hw_mix.place(x=450, y=320, anchor=tk.NW)
+    hw_mix.place(x=700, y=320, anchor=tk.W)
 
     hiw_ged = tk.Checkbutton(
         root,
-        text='Gedackt 8\'',
+        text=' Gedackt 8\'',
         font=("", 7),
         variable=hiw_1,
         command=lambda: writeHiW1(hiwRegChan,hiw_1RegKey)
         )
 
-    hiw_ged.place(x=614, y=230, anchor=tk.NW)
+    hiw_ged.place(x=1000, y=200, anchor=tk.W)
 
     hiw_gedfl = tk.Checkbutton(
         root,
-        text='Ged. Flöte 4\'',
+        text=' Ged. Flöte 4\'',
         font=("", 7),
         variable=hiw_2,
         command=lambda: writeHiW2(hiwRegChan,hiw_2RegKey)
         )
 
-    hiw_gedfl.place(x=614, y=260, anchor=tk.NW)
+    hiw_gedfl.place(x=1000, y=240, anchor=tk.W)
 
     hiw_wald = tk.Checkbutton(
         root,
-        text='Waldflöte 2\'',
+        text=' Waldflöte 2\'',
         font=("", 7),
         variable=hiw_3,
         command=lambda: writeHiW3(hiwRegChan,hiw_3RegKey)
         )
 
-    hiw_wald.place(x=614, y=290, anchor=tk.NW)
+    hiw_wald.place(x=1000, y=280, anchor=tk.W)
 
     hiw_siff = tk.Checkbutton(
         root,
-        text='Sifflöte',
+        text=' Sifflöte',
         font=("", 7),
         variable=hiw_4,
         command=lambda: writeHiW4(hiwRegChan,hiw_4RegKey)
         )
 
-    hiw_siff.place(x=614, y=320, anchor=tk.NW)
+    hiw_siff.place(x=1000, y=320, anchor=tk.W)
 
     ped_sub = tk.Checkbutton(
         root,
-        text='Subbaß 16\'',
+        text=' Subbaß 16\'',
         font=("", 7),
         variable=ped_1,
         command=lambda: writePed1(pedRegChan,ped_1RegKey)
         )
 
-    ped_sub.place(x=450, y=410, anchor=tk.NW)
+    ped_sub.place(x=700, y=470, anchor=tk.W)
 
     ped_nacht = tk.Checkbutton(
         root,
-        text='Nachthorn 4\'',
+        text=' Nachthorn 4\'',
         font=("", 7),
         variable=ped_2,
         command=lambda: writePed2(pedRegChan,ped_2RegKey)
         )
 
-    ped_nacht.place(x=450, y=440, anchor=tk.NW)
+    ped_nacht.place(x=700, y=510, anchor=tk.W)
 
     kop_man = tk.Checkbutton(
         root,
-        text='II/I',
+        text=' II/I',
         font=("", 7),
         variable=kop_1,
         command=kop1_switchOff
         )
 
-    kop_man.place(x=614, y=80, anchor=tk.NW)
+    kop_man.place(x=1000, y=470, anchor=tk.W)
 
     kop_pedI = tk.Checkbutton(
         root,
-        text='I/Ped',
+        text=' I/Ped',
         font=("", 7),
         variable=kop_2,
         command=kop2_switchOff
         )
 
-    kop_pedI.place(x=614, y=110, anchor=tk.NW)
+    kop_pedI.place(x=1000, y=510, anchor=tk.W)
 
     kop_pedII = tk.Checkbutton(
         root,
-        text='II/Ped',
+        text=' II/Ped',
         font=("", 7),
         variable=kop_3,
         command=kop3_switchOff
         )
 
-    kop_pedII.place(x=614, y=140, anchor=tk.NW)
+    kop_pedII.place(x=1000, y=550, anchor=tk.W)
 
     maintenance = tk.Button(
       root,
@@ -723,7 +768,7 @@ if __name__ == "__main__":
       command=maintenance_window
       )
 
-    maintenance.place(x=280, y=440, anchor=tk.CENTER)
+    maintenance.place(x=1230, y=720, anchor=tk.E)
 
     Version_Label = tk.Label(
       root,
@@ -731,6 +776,6 @@ if __name__ == "__main__":
       font=("", 7)
       )
 
-    Version_Label.place(x=660, y=440, anchor=tk.NW)
+    Version_Label.place(x=640, y=720, anchor=tk.CENTER)
 
     root.mainloop()
