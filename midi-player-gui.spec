@@ -76,6 +76,13 @@ install -m 644 -p Config/xinitrc-client -t %{buildroot}/%{optdir}/%{name}/Config
 install -m 644 -p Config/bashrc-client -t %{buildroot}/%{optdir}/%{name}/Config
 install -m 644 -p README.md -t %{buildroot}/%{optdir}/%{name}
 
+install -d %{buildroot}/%{optdir}/%{name}/Config/openbox
+install -m 644 -p Config/openbox/autostart -t %{buildroot}/%{optdir}/%{name}/Config/openbox
+install -m 644 -p Config/openbox/environment -t %{buildroot}/%{optdir}/%{name}/Config/openbox
+install -m 644 -p Config/openbox/menu.xml -t %{buildroot}/%{optdir}/%{name}/Config/openbox
+install -m 644 -p Config/openbox/rc.xml -t %{buildroot}/%{optdir}/%{name}/Config/openbox
+install -m 644 -p Config/openbox/terminals.menu -t %{buildroot}/%{optdir}/%{name}/Config/openbox
+
 install -d %{buildroot}/%{_sysconfdir}/udev/rules.d
 install -m 644 -p Config/90-usb-automount.rules -t %{buildroot}/%{_sysconfdir}/udev/rules.d
 
@@ -101,6 +108,12 @@ install -m 644 -p Server/midi-start-server.sh -t %{buildroot}/%{optdir}/%{name}
 %{optdir}/%{name}/Config/xinitrc-client
 %{optdir}/%{name}/Config/bashrc-client
 %{optdir}/%{name}/README.md
+
+%{optdir}/%{name}/Config/openbox/autostart
+%{optdir}/%{name}/Config/openbox/environment
+%{optdir}/%{name}/Config/openbox/menu.xml
+%{optdir}/%{name}/Config/openbox/rc.xml
+%{optdir}/%{name}/Config/openbox/terminals.menu
 
 #USB mount
 %{_sysconfdir}/udev/rules.d/90-usb-automount.rules
