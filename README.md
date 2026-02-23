@@ -59,7 +59,13 @@ Add startx to bashrc by:
 ```
 cat /opt/MIDI-Player-GUI/Config/bashrc-client >> $HOME/.bashrc
 ```
-Uncomment the startx-Midi function when ready.
+
+Copy openbox custom theme files:
+```
+cp -rv /opt/MIDI-Player-GUI/Config/openbox $HOME/.config
+```
+
+Uncomment the startx-Midi function in .bashrc when ready.
 
 
 
