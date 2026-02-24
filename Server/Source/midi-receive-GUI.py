@@ -21,12 +21,12 @@ def refreshlog():
 
 #get client IP Adress on wifi
 def getClientIPwifi():
-    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep wifi | awk '{print $1}') | /usr/sbin/awk '{print $2}'", shell=True)
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep -m 1 wifi | awk '{print $1}') | /usr/sbin/awk '{print $2}'", shell=True)
     return cIP.decode("utf-8")
 
 #get client IP Adress on LAN
 def getClientIPlan():
-    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep ethernet | awk '{print $1}') | /usr/sbin/awk '{print $2}'", shell=True)
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep -m 1 ethernet | awk '{print $1}') | /usr/sbin/awk '{print $2}'", shell=True)
     return cIP.decode("utf-8")
 
 if __name__ == "__main__":
