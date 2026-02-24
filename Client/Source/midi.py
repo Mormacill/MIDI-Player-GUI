@@ -54,12 +54,12 @@ ped_2RegKey = 77
 
 #get client IP Adress on wifi
 def getClientIPwifi():
-    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show wlp0s18f2u1 | /usr/sbin/awk '{print $2}'", shell=True)
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep wifi | awk '{print $1}') | /usr/sbin/awk '{print $2}'", shell=True)
     return cIP.decode("utf-8")
 
 #get client IP Adress on LAN
 def getClientIPlan():
-    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show enp1s0 | /usr/sbin/awk '{print $2}'", shell=True)
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep ethernet | awk '{print $1}') | /usr/sbin/awk '{print $2}'", shell=True)
     return cIP.decode("utf-8")
 
 #somehow port.panic() doesnt work on CH345
