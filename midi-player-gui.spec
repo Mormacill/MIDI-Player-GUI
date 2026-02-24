@@ -93,6 +93,9 @@ install -m 644 -p Server/Source/midi-receive-GUI.py -t %{buildroot}/%{optdir}/%{
 install -m 644 -p Server/Source/mido-getDevice.py -t %{buildroot}/%{optdir}/%{name}/Source
 install -m 644 -p Server/midi-start-server.sh -t %{buildroot}/%{optdir}/%{name}
 
+install -m 644 -p Config/xinitrc-server -t %{buildroot}/%{optdir}/%{name}/Config
+install -m 644 -p Config/bashrc-server -t %{buildroot}/%{optdir}/%{name}/Config
+
 %files client
 #Plymouth theme
 %{themedir}/mpg-organ.plymouth
@@ -126,6 +129,9 @@ install -m 644 -p Server/midi-start-server.sh -t %{buildroot}/%{optdir}/%{name}
 %{optdir}/%{name}/Source/midi-receive-GUI.py
 %{optdir}/%{name}/Source/mido-getDevice.py
 %{optdir}/%{name}/midi-start-server.sh
+
+%{optdir}/%{name}/Config/xinitrc-server
+%{optdir}/%{name}/Config/bashrc-server
 
 %post server
 

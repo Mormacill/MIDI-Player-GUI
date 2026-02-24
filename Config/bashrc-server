@@ -1,0 +1,8 @@
+
+function startx-Midiserver
+{
+if [ "$(tty)" = "/dev/tty1" ]; then
+  startx
+fi
+}
+#startx-Midiserver

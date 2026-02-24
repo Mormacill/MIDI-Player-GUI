@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/bash /opt/MIDI-Player-GUI/midi-start-server.sh
