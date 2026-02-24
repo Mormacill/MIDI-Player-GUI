@@ -74,7 +74,7 @@ install -m 644 -p Client/midi-start-client.sh -t %{buildroot}/%{optdir}/%{name}
 install -d %{buildroot}/%{optdir}/%{name}/Config
 install -m 644 -p Config/xinitrc-client -t %{buildroot}/%{optdir}/%{name}/Config
 install -m 644 -p Config/bashrc-client -t %{buildroot}/%{optdir}/%{name}/Config
-install -m 644 -p Client/README.md -t %{buildroot}/%{optdir}/%{name}/README-client.md
+install -m 644 -p Client/README-client.md -t %{buildroot}/%{optdir}/%{name}
 
 install -d %{buildroot}/%{optdir}/%{name}/Config/openbox
 install -m 644 -p Config/openbox/autostart -t %{buildroot}/%{optdir}/%{name}/Config/openbox
@@ -95,7 +95,7 @@ install -m 644 -p Server/midi-start-server.sh -t %{buildroot}/%{optdir}/%{name}
 
 install -m 644 -p Config/xinitrc-server -t %{buildroot}/%{optdir}/%{name}/Config
 install -m 644 -p Config/bashrc-server -t %{buildroot}/%{optdir}/%{name}/Config
-install -m 644 -p Server/README.md -t %{buildroot}/%{optdir}/%{name}/README-server.md
+install -m 644 -p Server/README-server.md -t %{buildroot}/%{optdir}/%{name}
 
 %files client
 #Plymouth theme
