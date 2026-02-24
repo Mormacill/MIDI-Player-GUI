@@ -69,7 +69,7 @@ Uncomment the startx-Midi function in .bashrc when ready.
 
 Set static IP address:
 ```
-mcli connection add con-name midi-static ifname enp1s0 type ethernet ipv4.addresses 192.168.99.2/24 ipv4.gateway 192.168.99.1 ipv6.method disabled
+mcli connection add con-name midi-static ifname enp1s0 type ethernet ip4 192.168.99.2/24
 ```
 
 
