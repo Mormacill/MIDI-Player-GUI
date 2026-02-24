@@ -27,11 +27,11 @@ VER = '1.2-EL'
 #Qsynth
 #port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
 
-#CH345 USB-Midi
+#CH345 USB-Midi, number at end may vary
 #port = mido.open_output('CH345:CH345 MIDI 1 28:0')
 
-#Automatically set with bash start script
-port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
+#Automatically set with MIDO_DEFAULT_OUTPUT environment variable exported via start script
+port = mido.open_output()
 
 ###
 hwRegChan = 2     #Stops all run via the pedal-interface since there are unused ports
