@@ -131,7 +131,7 @@ def playmidi():
     global running
     speed_multiplier_ref = speed_multiplier.get()
     running = False
-    filename = askopenfilename(filetypes = [('Midi Files', '*.mid')])
+    filename = askopenfilename(initialdir='/media', filetypes = [('Midi Files', '*.mid')])
     mid = mido.MidiFile(filename)
     estplaytime = mid.length / 60
     refreshPlaytime(estplaytime)
