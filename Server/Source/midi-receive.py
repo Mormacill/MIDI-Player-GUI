@@ -2,13 +2,21 @@
 
 import mido
 from mido import sockets
+import subprocess
 
-#Automatically set with bash start script
-port = mido.open_output('Midi Through:Midi Through Port-0 14:0')
+def getClientIPlan():
+    cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep ethernet | awk '{print $1}') | /usr/sbin/awk '{print $2}' | cut -d '/' -f 1", shell=True).strip()
+    return cIP.decode("utf-8")
 
-address = 'localhost:9080'
+#Automatically set with MIDO_DEFAULT_OUTPUT environment variable exported via start script
+port = mido.open_output()
+
+
+
+address = getClientIPlan() + ':9080'
 
 print(f'Serving on {address}')
+print('Port: ' + port.name)
 
 host, webport = sockets.parse_address(address)
 
