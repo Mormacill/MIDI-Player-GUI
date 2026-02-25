@@ -3,6 +3,7 @@
 import tkinter as tk
 import subprocess
 
+VER = '1.2-EL'
 
 def getServerAddress():
     server = subprocess.check_output("/usr/bin/head -n 1 /tmp/log.log", shell=True)
@@ -106,6 +107,13 @@ if __name__ == "__main__":
         )
 
     clientIP_wifi_Label.place(x=400, y=380, anchor=tk.CENTER)
+
+    Version_Label = tk.Label(
+        root,
+        text='Version ' + tk.StringVar(value=VER).get(),
+        )
+
+    Version_Label.place(x=400, y=450, anchor=tk.CENTER)
 
 #    device = tk.Text(
 #        root,
