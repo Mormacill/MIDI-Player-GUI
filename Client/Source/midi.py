@@ -52,6 +52,16 @@ ped_1RegKey = 76
 ped_2RegKey = 77
 ###
 
+def setRemoteConnection():
+    global port
+    port.close()
+    try:
+      port = mido.sockets.connect('localhost', 9080)
+      SerSen.set('Verbunden')
+    except:
+      port = mido.open_output()
+      SerSen.set('Fehler')
+
 #get client IP Adress on wifi
 def getClientIPwifi():
     cIP = subprocess.check_output("/usr/sbin/nmcli -f IP4.ADDRESS device show $(nmcli device status | grep wifi | awk '{print $1}') | /usr/sbin/awk '{print $2}'", shell=True)
@@ -335,6 +345,7 @@ def maintenance_window():
       text="Schließen",
       command=lambda: [mwindow.destroy(), ownPanic()]
       )
+
     mwindow_close.place(x=50, y=720, anchor=tk.W)
 
     mwindow_tune_hw = tk.Button(
@@ -523,6 +534,8 @@ if __name__ == "__main__":
 
     speed_multiplier = tk.IntVar()
     speed_multiplier.set(100)
+
+    SerSen = tk.StringVar()
 
     start = tk.Button(
         root,
@@ -777,5 +790,24 @@ if __name__ == "__main__":
       )
 
     Version_Label.place(x=640, y=720, anchor=tk.CENTER)
+
+    ServerSend_Checkbox = tk.Checkbutton(
+        root,
+        text=' Remote',
+        font=("", 7),
+        #variable=SerSen,
+        command=lambda: [setRemoteConnection(), ServerSend.place(x=650, y=50, anchor=tk.W), ServerSend.config(state='normal'), ServerSend.delete("1.0", "end"), ServerSend.tag_configure("center", justify='center'), ServerSend.insert(tk.END, SerSen.get()), ServerSend.tag_add("center", "1.0", "end"), ServerSend.config(state='disabled')]
+        )
+
+    ServerSend_Checkbox.place(x=1000, y=50, anchor=tk.W)
+
+    ServerSend = tk.Text(
+        root,
+        height = 1,
+        width = 18,
+        state='disabled'
+        )
+
+    #ServerSend.place in ServerSend_Checkbox command
 
     root.mainloop()
