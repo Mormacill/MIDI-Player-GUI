@@ -56,7 +56,7 @@ def setRemoteConnection():
     global port
     port.close()
     try:
-      port = mido.sockets.connect('localhost', 9080)
+      port = mido.sockets.connect('192.168.99.2', 9080)
       SerSen.set('Verbunden')
     except:
       port = mido.open_output()
