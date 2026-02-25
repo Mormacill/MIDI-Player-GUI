@@ -55,9 +55,13 @@ ped_2RegKey = 77
 def setRemoteConnection():
     global port
     port.close()
+    network = getClientIPlan()
     try:
-      port = mido.sockets.connect('192.168.99.2', 9080)
-      SerSen.set('Verbunden')
+      if network:
+        port = mido.sockets.connect('192.168.99.2', 9080)
+        SerSen.set('Verbunden')
+      else:
+        SerSen.set('LAN nicht verbunden!')
     except:
       port = mido.open_output()
       SerSen.set('Fehler')
