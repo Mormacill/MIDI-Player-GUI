@@ -56,15 +56,17 @@ def setRemoteConnection():
     global port
     port.close()
     network = getClientIPlan()
-    try:
-      if network:
+
+    if network:
+      try:
         port = mido.sockets.connect('192.168.99.2', 9080)
         SerSen.set('Verbunden')
-      else:
-        SerSen.set('LAN nicht verbunden!')
-    except:
+      except:
+        port = mido.open_output()
+        SerSen.set('Fehler')
+    else:
+      SerSen.set('LAN nicht verbunden!')
       port = mido.open_output()
-      SerSen.set('Fehler')
 
 #get client IP Adress on wifi
 def getClientIPwifi():
