@@ -13,12 +13,22 @@ def taillog():
     s = subprocess.check_output("/usr/bin/tail -n 15 /tmp/log.log", shell=True)
     return s.decode("utf-8")
 
-def refreshlog():
+def getTmp():
+    gt = subprocess.check_output("/usr/bin/df -h | grep /tmp", shell=True)
+    return gt.decode("utf-8")
+
+def refreshLogTmp():
     tb2.config(state='normal')
     tb2.delete("1.0", "end")
     tb2.insert(tk.END, taillog())
     tb2.config(state='disabled')
-    root.after(100, refreshlog)
+
+    tmpSize.config(state='normal')
+    tmpSize.delete("1.0", "end")
+    tmpSize.insert(tk.END, getTmp())
+    tmpSize.config(state='disabled')
+
+    root.after(100, refreshLogTmp)
 
 #get client IP Adress on wifi
 def getClientIPwifi():
@@ -115,31 +125,16 @@ if __name__ == "__main__":
 
     Version_Label.place(x=400, y=450, anchor=tk.CENTER)
 
-#    device = tk.Text(
-#        root,
-#        height = 1,
-#        width = 40,
-#        state='disabled'
-#        )
-#
-#    device.place(x=400, y=440, anchor=tk.CENTER)
-#
-#    device.config(state='normal')
-#    device.delete("1.0", "end")
-#    device.tag_configure("center", justify='center')
-#    device.insert(tk.END, port.name)
-#    device.tag_add("center", "1.0", "end")
-#    device.config(state='disabled')
-#
-#    device_Label = tk.Label(
-#        root,
-#        text='Gerät:',
-#        #bg='light goldenrod yellow'
-#        )
-#
-#    device_Label.place(x=400, y=420, anchor=tk.CENTER)
+    tmpSize = tk.Text(
+        root,
+        height = 1,
+        width = 45,
+        state='disabled'
+        )
 
-    print(taillog())
-    refreshlog()
+    tmpSize.place(x=30, y=400, anchor=tk.W)
+
+#    print(taillog())
+    refreshLogTmp()
 
     root.mainloop()
